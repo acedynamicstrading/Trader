@@ -212,7 +212,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 <button id="tradeFab" onclick="openDrawer()">💼<div id="fabBadge">0</div></button>
 <button id="aiFab" onclick="openAI()">🤖</button>
 <div id="toast"></div>
-<div id="drawerBackdrop" onclick="closeDrawer()"></div>
+<div id="drawerBackdrop" onclick="if(document.getElementById('aiDrawer').classList.contains('open'))closeAI();else closeDrawer();"></div>
 
 <div id="drawer">
   <div class="drag-pill"></div>
@@ -347,15 +347,16 @@ function signal(){
   const c1=E9>E21,c2=QQE<50&&QQE>QQEp,c3=price>VW,c4=RSI>50&&RSI<70,c5=BB&&price>BB.mid;
   const b1=!c1,b2=QQE>50&&QQE<QQEp,b3=price<VW,b4=RSI<50&&RSI>30,b5=BB&&price<BB.mid;
   const bs=[c1,c2,c3,c4,c5].filter(Boolean).length,ss=[b1,b2,b3,b4,b5].filter(Boolean).length;
-  const isBuy=bs>=ss,score=isBuy?bs:ss,conds=isBuy?[c1,c2,c3,c4,c5]:[b1,b2,b3,b4,b5];
+  const isBuy=bs>ss,score=isBuy?bs:(bs===ss?bs:ss),conds=isBuy?[c1,c2,c3,c4,c5]:[b1,b2,b3,b4,b5];
+  const tied=bs===ss;
   document.querySelectorAll('.sdot').forEach((d,i)=>{d.className='sdot '+(conds[i]?'on':'off');});
   const badge=document.getElementById('signalBadge'),sigText=document.getElementById('sigText'),slTp=document.getElementById('slTpBadge');
-  if(score>=4&&isBuy){
+  if(score>=4&&isBuy&&!tied){
     badge.textContent='▲ BUY';badge.className='sig-buy';sigText.textContent=score+'/5 confirmed · long';
     const sl=(price*0.997).toFixed(2),tp=(price+(price-price*0.997)*2).toFixed(2);
     slTp.innerHTML=`<span style="color:var(--red)">SL ${sl}</span><br><span style="color:var(--green)">TP ${tp}</span>`;
     xLogSig('BUY',price,score);
-  }else if(score>=4&&!isBuy){
+  }else if(score>=4&&!isBuy&&!tied){
     badge.textContent='▼ SELL';badge.className='sig-sell';sigText.textContent=score+'/5 confirmed · short';
     const sl=(price*1.003).toFixed(2),tp=(price-(price*1.003-price)*2).toFixed(2);
     slTp.innerHTML=`<span style="color:var(--red)">SL ${sl}</span><br><span style="color:var(--green)">TP ${tp}</span>`;
@@ -436,21 +437,58 @@ function drawQQE(arr){
   vis.forEach((v,i)=>{if(v==null)return;const x=i*gap+gap/2,y=sy(v);if(!s){qCtx.moveTo(x,y);s=true;}else qCtx.lineTo(x,y);});qCtx.stroke();qCtx.restore();
 }
 
+// REST endpoints tried in order until one succeeds
+const REST_HOSTS=[
+  'https://api.binance.com',
+  'https://api1.binance.com',
+  'https://api2.binance.com',
+  'https://api3.binance.com',
+  'https://data-api.binance.vision'
+];
+// WebSocket hosts tried in order
+const WS_HOSTS=[
+  'wss://stream.binance.com:9443',
+  'wss://stream.binance.com:443',
+  'wss://data-stream.binance.vision'
+];
+let _wsHostIdx=0,_wsRetries=0;
+
 async function fetchHistory(){
-  try{
-    const r=await fetch(`https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=${interval}&limit=${MAX_C}`);
-    const d=await r.json();
-    candles=d.map(k=>({t:+k[0],o:+k[1],h:+k[2],l:+k[3],c:+k[4],v:+k[5]}));draw();
-  }catch(e){}
+  const dot=document.getElementById('connDot'),lbl=document.getElementById('connLabel');
+  dot.className='cdot';lbl.textContent='…';
+  for(const host of REST_HOSTS){
+    try{
+      const r=await fetch(`${host}/api/v3/klines?symbol=${symbol}&interval=${interval}&limit=${MAX_C}`);
+      if(!r.ok)continue;
+      const d=await r.json();
+      if(!Array.isArray(d)||!d.length)continue;
+      candles=d.map(k=>({t:+k[0],o:+k[1],h:+k[2],l:+k[3],c:+k[4],v:+k[5]}));
+      draw();
+      return true;
+    }catch(e){}
+  }
+  lbl.textContent='REST FAIL';
+  return false;
 }
+
 function connectWS(){
   if(ws){try{ws.close();}catch(e){}ws=null;}
   const dot=document.getElementById('connDot'),lbl=document.getElementById('connLabel');
   dot.className='cdot';lbl.textContent='…';
-  ws=new WebSocket(`wss://stream.binance.com:9443/ws/${symbol.toLowerCase()}@kline_${interval}`);
-  ws.onopen=()=>{dot.className='cdot live';lbl.textContent='LIVE';};
+  const host=WS_HOSTS[_wsHostIdx%WS_HOSTS.length];
+  try{ws=new WebSocket(`${host}/ws/${symbol.toLowerCase()}@kline_${interval}`);}
+  catch(e){_onWsFailure();return;}
+  let _pingTimer=null;
+  ws.onopen=()=>{
+    dot.className='cdot live';lbl.textContent='LIVE';
+    _wsRetries=0;
+    // keepalive ping every 20s (Binance closes idle WS after 24h but some proxies cut sooner)
+    _pingTimer=setInterval(()=>{if(ws&&ws.readyState===1)ws.send(JSON.stringify({method:'ping'}));},20000);
+  };
   ws.onmessage=e=>{
-    const k=JSON.parse(e.data).k,c={t:k.t,o:+k.o,h:+k.h,l:+k.l,c:+k.c,v:+k.v};
+    let data;try{data=JSON.parse(e.data);}catch(err){return;}
+    if(!data.k)return; // ignore pong/other frames
+    const k=data.k,c={t:k.t,o:+k.o,h:+k.h,l:+k.l,c:+k.c,v:+k.v};
     if(candles.length&&candles[candles.length-1].t===c.t)candles[candles.length-1]=c;
     else{candles.push(c);if(candles.length>MAX_C)candles.shift();}
     const prev=candles.length>1?candles[candles.length-2].c:c.o,pct=(c.c-prev)/prev*100;
@@ -462,11 +500,18 @@ function connectWS(){
     if(drawerOpen){document.getElementById('formPrice').textContent=c.c.toFixed(2);renderDrawer();}
     if(raf)cancelAnimationFrame(raf);raf=requestAnimationFrame(draw);
   };
-  ws.onerror=()=>{dot.className='cdot err';lbl.textContent='ERR';};
-  ws.onclose=()=>{dot.className='cdot';lbl.textContent='—';setTimeout(connectWS,3000);};
+  ws.onerror=()=>{clearInterval(_pingTimer);dot.className='cdot err';lbl.textContent='ERR';};
+  ws.onclose=()=>{clearInterval(_pingTimer);dot.className='cdot';lbl.textContent='—';_onWsFailure();};
 }
-function setPair(s,btn){symbol=s;document.querySelectorAll('.pair-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');candles=[];fetchHistory().then(connectWS);}
-function setTF(tf,btn){interval=tf;document.querySelectorAll('.tf-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');candles=[];fetchHistory().then(connectWS);}
+function _onWsFailure(){
+  _wsRetries++;
+  // cycle to next WS host after 2 failures on same host
+  if(_wsRetries%2===0)_wsHostIdx=(_wsHostIdx+1)%WS_HOSTS.length;
+  const delay=Math.min(1000*Math.pow(2,Math.min(_wsRetries,5)),30000); // exponential backoff, max 30s
+  setTimeout(connectWS,delay);
+}
+function setPair(s,btn){symbol=s;document.querySelectorAll('.pair-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');candles=[];if(ws){try{ws.close();}catch(e){}ws=null;}_wsRetries=0;fetchHistory().then(connectWS);}
+function setTF(tf,btn){interval=tf;document.querySelectorAll('.tf-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');candles=[];if(ws){try{ws.close();}catch(e){}ws=null;}_wsRetries=0;fetchHistory().then(connectWS);}
 
 // ════════════════════════════════
 // PAPER TRADING
@@ -490,9 +535,9 @@ function closeDrawer(){
   document.getElementById('drawerBackdrop').classList.remove('show');
 }
 
-let _ty=0;
-document.getElementById('drawer').addEventListener('touchstart',e=>{_ty=e.touches[0].clientY;},{passive:true});
-document.getElementById('drawer').addEventListener('touchend',e=>{if(e.changedTouches[0].clientY-_ty>80)closeDrawer();},{passive:true});
+let _tyDrawer=0,_tyAI=0;
+document.getElementById('drawer').addEventListener('touchstart',e=>{_tyDrawer=e.touches[0].clientY;},{passive:true});
+document.getElementById('drawer').addEventListener('touchend',e=>{if(e.changedTouches[0].clientY-_tyDrawer>80)closeDrawer();},{passive:true});
 
 function switchTab(t,btn){
   document.querySelectorAll('.dtab').forEach(d=>d.classList.remove('active'));btn.classList.add('active');
@@ -621,8 +666,8 @@ function closeAI(){
   document.getElementById('aiDrawer').classList.remove('open');
   document.getElementById('drawerBackdrop').classList.remove('show');
 }
-document.getElementById('aiDrawer').addEventListener('touchstart',e=>{_ty=e.touches[0].clientY;},{passive:true});
-document.getElementById('aiDrawer').addEventListener('touchend',e=>{if(e.changedTouches[0].clientY-_ty>80)closeAI();},{passive:true});
+document.getElementById('aiDrawer').addEventListener('touchstart',e=>{_tyAI=e.touches[0].clientY;},{passive:true});
+document.getElementById('aiDrawer').addEventListener('touchend',e=>{if(e.changedTouches[0].clientY-_tyAI>80)closeAI();},{passive:true});
 function saveGroqKey(){
   const v=document.getElementById('aiKeyIn').value.trim();
   if(!v){toast('⚠ Enter a key');return;}
@@ -651,7 +696,7 @@ async function runAI(){
 }
 
 // INIT
-resize();updateFab();fetchHistory().then(connectWS);
+window.addEventListener('load',()=>{resize();updateFab();fetchHistory().then(connectWS);});
 </script>
 </body>
 </html>
