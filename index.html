@@ -41,7 +41,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .ctrl-sep{width:1px;height:16px;background:var(--border);flex-shrink:0;margin:0 2px;align-self:center;}
 
 /* SIGNAL BAR */
-#signalBar{flex-shrink:0;display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--dim);border-bottom:1px solid var(--border);}
+#signalBar{flex-shrink:0;display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--dim);border-bottom:1px solid var(--border);}
 #signalBadge{font-family:'Oxanium',sans-serif;font-weight:800;font-size:14px;padding:5px 12px;border-radius:6px;letter-spacing:1px;transition:all 0.3s;flex-shrink:0;min-width:74px;text-align:center;}
 .sig-buy{background:rgba(0,230,118,0.15);color:var(--green);border:1px solid rgba(0,230,118,0.35);}
 .sig-sell{background:rgba(245,65,79,0.15);color:var(--red);border:1px solid rgba(245,65,79,0.35);}
@@ -52,11 +52,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .sdot.off{background:var(--red);}
 #sigText{font-size:10px;color:var(--muted);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 #slTpBadge{font-size:10px;flex-shrink:0;line-height:1.7;text-align:right;}
-/* Spread + volatility bar */
-#spreadBar{flex-shrink:0;display:flex;align-items:center;gap:10px;padding:4px 12px;background:var(--bg);border-bottom:1px solid var(--border);font-size:10px;color:var(--muted);}
-#spreadVal{color:var(--text);font-weight:600;}
-#volWarning{color:var(--yellow);font-weight:600;display:none;}
-#atrVal{color:var(--orange);}
 
 /* CHART */
 #chartWrap{flex:1;min-height:0;position:relative;background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(33,150,243,0.04) 0%,transparent 70%);}
@@ -65,7 +60,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 
 /* SUB PANELS */
 #subPanels{flex-shrink:0;}
-.sub-panel{height:52px;position:relative;border-top:1px solid var(--border);background:var(--panel);}
+.sub-panel{height:58px;position:relative;border-top:1px solid var(--border);background:var(--panel);}
 .sub-panel canvas{position:absolute;top:0;left:0;}
 .sub-label{position:absolute;top:4px;left:8px;z-index:2;font-size:9px;color:var(--muted);pointer-events:none;display:flex;gap:6px;align-items:center;}
 .sub-val{font-weight:600;font-size:10px;}
@@ -73,18 +68,14 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 /* OHLCV BAR */
 #ohlcBar{flex-shrink:0;display:flex;background:var(--panel);border-top:1px solid var(--border);overflow-x:auto;padding-bottom:var(--sb);}
 #ohlcBar::-webkit-scrollbar{display:none;}
-.ohlc-item{flex-shrink:0;padding:6px 10px;display:flex;flex-direction:column;align-items:center;border-right:1px solid var(--border);}
+.ohlc-item{flex-shrink:0;padding:7px 12px;display:flex;flex-direction:column;align-items:center;border-right:1px solid var(--border);}
 .ohlc-lbl{font-size:8px;color:var(--muted);letter-spacing:1px;margin-bottom:2px;}
-.ohlc-val{font-size:11px;font-weight:600;}
+.ohlc-val{font-size:12px;font-weight:600;}
 
 /* FAB */
 #tradeFab{position:fixed;bottom:calc(var(--sb) + 18px);right:16px;z-index:100;width:58px;height:58px;border-radius:50%;background:var(--blue);border:none;color:#fff;font-size:24px;cursor:pointer;box-shadow:0 4px 24px rgba(33,150,243,0.5);display:flex;align-items:center;justify-content:center;transition:transform 0.2s;}
 #tradeFab:active{transform:scale(0.88);}
 #fabBadge{position:absolute;top:-3px;right:-3px;width:18px;height:18px;border-radius:50%;background:var(--green);color:#000;font-size:10px;font-weight:800;display:none;align-items:center;justify-content:center;border:2px solid var(--bg);}
-
-/* AI FAB */
-#aiFab{position:fixed;bottom:calc(var(--sb) + 88px);right:16px;z-index:100;width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,#6a1be0,#b06aff);border:none;color:#fff;font-size:18px;cursor:pointer;box-shadow:0 4px 20px rgba(176,106,255,0.5);display:flex;align-items:center;justify-content:center;transition:transform 0.2s;}
-#aiFab:active{transform:scale(0.88);}
 
 /* DRAWER */
 #drawerBackdrop{position:fixed;inset:0;z-index:199;background:rgba(0,0,0,0.65);opacity:0;pointer-events:none;transition:opacity 0.3s;}
@@ -93,7 +84,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 #drawer.open{transform:translateY(0);}
 .drag-pill{width:40px;height:5px;border-radius:3px;background:var(--border);margin:12px auto 0;flex-shrink:0;}
 #drawerTabs{display:flex;border-bottom:1px solid var(--border);flex-shrink:0;margin-top:10px;}
-.dtab{flex:1;padding:10px 2px;text-align:center;font-size:10px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.15s;font-family:'JetBrains Mono',monospace;}
+.dtab{flex:1;padding:12px 4px;text-align:center;font-size:11px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.15s;font-family:'JetBrains Mono',monospace;}
 .dtab.active{color:var(--blue);border-bottom-color:var(--blue);}
 #drawerBody{overflow-y:auto;flex:1;padding:14px;}
 #drawerBody::-webkit-scrollbar{display:none;}
@@ -115,10 +106,9 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .presets{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px;}
 .preset-btn{padding:10px 0;border-radius:7px;border:1px solid var(--border);background:var(--bg);color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;font-family:'JetBrains Mono',monospace;transition:all 0.15s;}
 .preset-btn:active{background:var(--blue);border-color:var(--blue);color:#fff;}
-.sl-tp-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;}
+.sl-tp-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
 .mini-input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:10px 12px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:13px;outline:none;transition:border-color 0.2s;}
 .mini-input:focus{border-color:var(--blue);}
-.atr-hint{font-size:9px;color:var(--muted);margin-bottom:10px;text-align:center;}
 .trade-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .buy-btn,.sell-btn{padding:17px;border-radius:10px;border:none;font-family:'Oxanium',sans-serif;font-size:18px;font-weight:800;letter-spacing:1px;cursor:pointer;transition:all 0.15s;}
 .buy-btn{background:rgba(0,230,118,0.18);color:var(--green);border:1px solid rgba(0,230,118,0.4);}
@@ -148,15 +138,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .hist-meta{font-size:10px;color:var(--muted);}
 .hist-pnl{font-family:'Oxanium',sans-serif;font-size:15px;font-weight:700;}
 
-/* SIGNAL LOG */
-.siglog-card{background:var(--dim);border-radius:10px;border:1px solid var(--border);overflow:hidden;margin-bottom:12px;}
-.siglog-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid var(--border);font-size:11px;}
-.siglog-row:last-child{border-bottom:none;}
-.siglog-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;}
-.siglog-buy{background:rgba(0,230,118,0.15);color:var(--green);}
-.siglog-sell{background:rgba(245,65,79,0.15);color:var(--red);}
-.siglog-outcome{font-size:10px;font-weight:700;}
-
 /* STATS */
 .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
 .stat-card{background:var(--dim);border-radius:10px;border:1px solid var(--border);padding:12px;}
@@ -165,30 +146,42 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .reset-btn{width:100%;padding:15px;border-radius:10px;border:1px solid rgba(245,65,79,0.4);background:rgba(245,65,79,0.08);color:var(--red);font-size:13px;font-weight:600;cursor:pointer;font-family:'JetBrains Mono',monospace;min-height:50px;}
 .reset-btn:active{background:rgba(245,65,79,0.2);}
 
+/* SPREAD BAR */
+#spreadBar{flex-shrink:0;display:flex;align-items:center;gap:12px;padding:4px 12px;background:var(--bg);border-bottom:1px solid var(--border);font-size:10px;color:var(--muted);}
+#atrVal{color:var(--orange);font-weight:600;}
+#volWarn{color:var(--yellow);font-weight:700;display:none;}
+
+/* SIGNAL LOG */
+.siglog-card{background:var(--dim);border-radius:10px;border:1px solid var(--border);overflow:hidden;margin-bottom:12px;}
+.siglog-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid var(--border);font-size:11px;}
+.siglog-row:last-child{border-bottom:none;}
+.siglog-b{font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;background:rgba(0,230,118,0.15);color:var(--green);}
+.siglog-s{font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;background:rgba(245,65,79,0.15);color:var(--red);}
+
 /* AI DRAWER */
+#aiFab{position:fixed;bottom:calc(var(--sb) + 86px);right:16px;z-index:100;width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,#6a1be0,#b06aff);border:none;color:#fff;font-size:18px;cursor:pointer;box-shadow:0 4px 20px rgba(176,106,255,0.5);display:flex;align-items:center;justify-content:center;transition:transform 0.2s;}
+#aiFab:active{transform:scale(0.88);}
 #aiDrawer{position:fixed;bottom:0;left:0;right:0;z-index:300;background:var(--panel);border-radius:20px 20px 0 0;border-top:2px solid var(--purple);transform:translateY(100%);transition:transform 0.35s cubic-bezier(0.32,0.72,0,1);display:flex;flex-direction:column;max-height:80dvh;padding-bottom:var(--sb);}
 #aiDrawer.open{transform:translateY(0);}
-#aiHeader{padding:16px 16px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-shrink:0;}
-#aiTitle{font-family:'Oxanium',sans-serif;font-weight:800;font-size:16px;color:var(--purple);}
-#aiClose{margin-left:auto;background:transparent;border:none;color:var(--muted);font-size:20px;cursor:pointer;padding:4px 8px;}
+#aiHead{padding:14px 16px 10px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-shrink:0;}
+#aiCloseBtn{margin-left:auto;background:transparent;border:none;color:var(--muted);font-size:20px;cursor:pointer;padding:4px 8px;}
 #aiKeyRow{padding:10px 16px;border-bottom:1px solid var(--border);display:flex;gap:8px;align-items:center;flex-shrink:0;}
-#aiKeyInput{flex:1;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:12px;outline:none;}
-#aiKeyInput:focus{border-color:var(--purple);}
-#aiKeyBtn{padding:10px 14px;border-radius:8px;background:var(--purple);border:none;color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:'JetBrains Mono',monospace;white-space:nowrap;}
+#aiKeyIn{flex:1;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:12px;outline:none;}
+#aiKeyIn:focus{border-color:var(--purple);}
+#aiSaveBtn{padding:10px 14px;border-radius:8px;background:var(--purple);border:none;color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:'JetBrains Mono',monospace;}
 #aiBody{overflow-y:auto;flex:1;padding:16px;}
 #aiBody::-webkit-scrollbar{display:none;}
-#aiAnalyzeBtn{width:100%;padding:15px;border-radius:10px;background:linear-gradient(135deg,rgba(106,27,224,0.3),rgba(176,106,255,0.3));border:1px solid var(--purple);color:var(--purple);font-family:'Oxanium',sans-serif;font-size:16px;font-weight:800;cursor:pointer;margin-bottom:14px;transition:all 0.2s;}
-#aiAnalyzeBtn:active{background:var(--purple);color:#fff;}
-#aiAnalyzeBtn:disabled{opacity:0.5;cursor:not-allowed;}
-#aiResult{background:var(--dim);border-radius:12px;border:1px solid var(--border);padding:14px;font-size:12px;line-height:1.7;color:var(--text);min-height:60px;white-space:pre-wrap;}
-#aiSpinner{display:none;text-align:center;padding:20px;color:var(--purple);font-size:13px;}
+#aiRunBtn{width:100%;padding:15px;border-radius:10px;background:linear-gradient(135deg,rgba(106,27,224,0.3),rgba(176,106,255,0.3));border:1px solid var(--purple);color:var(--purple);font-family:'Oxanium',sans-serif;font-size:16px;font-weight:800;cursor:pointer;margin-bottom:14px;}
+#aiRunBtn:active{background:var(--purple);color:#fff;}
+#aiRunBtn:disabled{opacity:0.4;}
+#aiOut{background:var(--dim);border-radius:12px;border:1px solid var(--border);padding:14px;font-size:12px;line-height:1.7;color:var(--text);white-space:pre-wrap;}
 
 /* EMPTY */
 .empty{text-align:center;padding:32px 20px;color:var(--muted);font-size:12px;}
 .empty-icon{font-size:32px;margin-bottom:8px;}
 
 /* TOAST */
-#toast{position:fixed;bottom:calc(var(--sb) + 88px);left:50%;transform:translateX(-50%) translateY(8px);background:var(--card);border:1px solid var(--border);padding:10px 22px;border-radius:24px;font-size:12px;font-weight:600;opacity:0;transition:all 0.25s;z-index:500;pointer-events:none;white-space:nowrap;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+#toast{position:fixed;bottom:calc(var(--sb) + 88px);left:50%;transform:translateX(-50%) translateY(8px);background:var(--card);border:1px solid var(--border);padding:10px 22px;border-radius:24px;font-size:12px;font-weight:600;opacity:0;transition:all 0.25s;z-index:400;pointer-events:none;white-space:nowrap;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 </style>
 </head>
@@ -227,22 +220,18 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   <div id="signalBar">
     <div id="signalBadge" class="sig-wait">WAIT</div>
     <div id="condRow">
-      <div class="sdot" title="EMA Trend"></div>
-      <div class="sdot" title="QQE Momentum"></div>
-      <div class="sdot" title="VWAP Position"></div>
-      <div class="sdot" title="RSI Zone"></div>
-      <div class="sdot" title="BB Position"></div>
-      <div class="sdot" title="Volume"></div>
+      <div class="sdot"></div><div class="sdot"></div><div class="sdot"></div>
+      <div class="sdot"></div><div class="sdot"></div><div class="sdot"></div>
     </div>
     <div id="sigText">Connecting…</div>
     <div id="slTpBadge"></div>
   </div>
 
-  <!-- SPREAD / VOLATILITY BAR -->
+  <!-- SPREAD / ATR BAR -->
   <div id="spreadBar">
-    <span>SPREAD <span id="spreadVal">—</span></span>
     <span>ATR <span id="atrVal">—</span></span>
-    <span id="volWarning">⚠ HIGH VOL</span>
+    <span>VOL RATIO <span id="volRatioVal" style="color:var(--text);font-weight:600">—</span></span>
+    <span id="volWarn">⚠ HIGH VOL</span>
   </div>
 
   <!-- CHART -->
@@ -277,9 +266,26 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 
 </div>
 
-<!-- FABs -->
-<button id="aiFab" onclick="openAI()">🤖</button>
+<!-- FAB -->
 <button id="tradeFab" onclick="openDrawer()">💼<div id="fabBadge">0</div></button>
+<button id="aiFab" onclick="openAI()">🤖</button>
+
+<!-- AI DRAWER -->
+<div id="aiDrawer">
+  <div id="aiHead">
+    <span style="font-size:18px">🤖</span>
+    <span style="font-family:'Oxanium',sans-serif;font-weight:800;font-size:15px;color:var(--purple)">Groq AI Analysis</span>
+    <button id="aiCloseBtn" onclick="closeAI()">✕</button>
+  </div>
+  <div id="aiKeyRow">
+    <input id="aiKeyIn" type="password" placeholder="Free Groq API key — console.groq.com">
+    <button id="aiSaveBtn" onclick="saveGroqKey()">SAVE</button>
+  </div>
+  <div id="aiBody">
+    <button id="aiRunBtn" onclick="runGroqAnalysis()">⚡ ANALYZE CURRENT SETUP</button>
+    <div id="aiOut" style="color:var(--muted)">Enter your free Groq key above then tap Analyze for AI commentary on current signals and indicators.</div>
+  </div>
+</div>
 
 <!-- TOAST -->
 <div id="toast"></div>
@@ -287,7 +293,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 <!-- BACKDROP -->
 <div id="drawerBackdrop" onclick="closeDrawer()"></div>
 
-<!-- TRADE DRAWER -->
+<!-- DRAWER -->
 <div id="drawer">
   <div class="drag-pill"></div>
   <div id="drawerTabs">
@@ -304,7 +310,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
       <div class="acct-card"><div class="ac-lbl">P&amp;L</div><div class="ac-val" id="acctPnl">$0</div></div>
     </div>
 
-    <!-- TRADE TAB -->
+    <!-- TRADE -->
     <div id="tabTrade">
       <div class="trade-form">
         <div class="form-header">
@@ -320,10 +326,9 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
           <button class="preset-btn" onclick="setAmt(500)">$500</button>
         </div>
         <div class="sl-tp-row">
-          <div><div class="field-lbl">STOP LOSS</div><input class="mini-input" id="tradeSL" type="number" inputmode="decimal" placeholder="auto (ATR)"></div>
-          <div><div class="field-lbl">TAKE PROFIT</div><input class="mini-input" id="tradeTP" type="number" inputmode="decimal" placeholder="auto (2×ATR)"></div>
+          <div><div class="field-lbl">STOP LOSS</div><input class="mini-input" id="tradeSL" type="number" inputmode="decimal" placeholder="auto"></div>
+          <div><div class="field-lbl">TAKE PROFIT</div><input class="mini-input" id="tradeTP" type="number" inputmode="decimal" placeholder="auto"></div>
         </div>
-        <div class="atr-hint" id="atrHint">ATR-based SL/TP will be calculated automatically</div>
         <div class="trade-btns">
           <button class="buy-btn" onclick="executeTrade('LONG')">▲ LONG</button>
           <button class="sell-btn" onclick="executeTrade('SHORT')">▼ SHORT</button>
@@ -332,19 +337,13 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
       <div style="font-size:10px;color:var(--muted);text-align:center;padding-bottom:4px">Paper trading · no real money</div>
     </div>
 
-    <!-- POSITIONS TAB -->
+    <!-- POSITIONS -->
     <div id="tabPositions" style="display:none"><div id="posList"></div></div>
 
-    <!-- HISTORY TAB -->
+    <!-- HISTORY -->
     <div id="tabHistory" style="display:none"><div id="histList"></div></div>
 
-    <!-- SIGNALS LOG TAB -->
-    <div id="tabSignals" style="display:none">
-      <div style="font-size:10px;color:var(--muted);margin-bottom:10px;">Auto-logged BUY/SELL signals with outcomes</div>
-      <div id="sigLogList"></div>
-    </div>
-
-    <!-- STATS TAB -->
+    <!-- STATS -->
     <div id="tabStats" style="display:none">
       <div class="stats-grid">
         <div class="stat-card"><div class="stat-lbl">WIN RATE</div><div class="stat-val" id="sWR" style="color:var(--green)">—</div></div>
@@ -358,30 +357,18 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
       </div>
       <button class="reset-btn" onclick="resetAcct()">↺ Reset account to $10,000</button>
     </div>
-  </div>
-</div>
 
-<!-- AI DRAWER -->
-<div id="aiDrawer">
-  <div id="aiHeader">
-    <span style="font-size:20px">🤖</span>
-    <span id="aiTitle">Groq AI Analysis</span>
-    <button id="aiClose" onclick="closeAI()">✕</button>
-  </div>
-  <div id="aiKeyRow">
-    <input id="aiKeyInput" type="password" placeholder="Paste Groq API key (free at console.groq.com)">
-    <button id="aiKeyBtn" onclick="saveGroqKey()">SAVE</button>
-  </div>
-  <div id="aiBody">
-    <button id="aiAnalyzeBtn" onclick="runGroqAnalysis()">⚡ ANALYZE CURRENT SETUP</button>
-    <div id="aiSpinner">🔮 Analyzing market…</div>
-    <div id="aiResult" style="color:var(--muted)">Enter your free Groq API key above, then tap Analyze to get AI commentary on the current signal, indicators, and market conditions.</div>
+    <!-- SIGNALS LOG -->
+    <div id="tabSignals" style="display:none">
+      <div style="font-size:10px;color:var(--muted);margin-bottom:10px;">Auto-logged BUY/SELL signals · outcome tracked when signal flips</div>
+      <div id="sigLogList"></div>
+    </div>
   </div>
 </div>
 
 <script>
 // ════════════════════════════════
-// CHART ENGINE — DO NOT MODIFY
+// CHART
 // ════════════════════════════════
 let candles=[],symbol='BTCUSDT',interval='1m',ws=null,raf=null;
 const MAX_C=200;
@@ -401,7 +388,6 @@ function resize(){
 }
 window.addEventListener('resize',()=>{clearTimeout(window._rt);window._rt=setTimeout(resize,80);});
 
-// ── INDICATORS ──────────────────
 function ema(arr,p){
   const k=2/(p+1);let prev=null;const out=[];
   for(let i=0;i<arr.length;i++){
@@ -427,9 +413,8 @@ function calcBB(cl,p=20,m=2){
   return cl.map((_,i)=>{if(i<p-1)return null;const sl=cl.slice(i-p+1,i+1),mn=sl.reduce((a,b)=>a+b,0)/p,sd=Math.sqrt(sl.reduce((a,b)=>a+(b-mn)**2,0)/p);return{u:mn+m*sd,mid:mn,l:mn-m*sd};});
 }
 function calcATR(cs,p=14){
-  const trs=cs.map((c,i)=>{if(i===0)return c.h-c.l;return Math.max(c.h-c.l,Math.abs(c.h-cs[i-1].c),Math.abs(c.l-cs[i-1].c));});
-  const out=Array(cs.length).fill(null);
-  if(cs.length<p)return out;
+  const trs=cs.map((c,i)=>i===0?c.h-c.l:Math.max(c.h-c.l,Math.abs(c.h-cs[i-1].c),Math.abs(c.l-cs[i-1].c)));
+  const out=Array(cs.length).fill(null);if(cs.length<p)return out;
   let sum=trs.slice(0,p).reduce((a,b)=>a+b,0);out[p-1]=sum/p;
   for(let i=p;i<cs.length;i++){out[i]=(out[i-1]*(p-1)+trs[i])/p;}
   return out;
@@ -438,49 +423,29 @@ function calcVolMA(cs,p=20){
   const vols=cs.map(c=>c.v);
   return vols.map((_,i)=>{if(i<p-1)return null;return vols.slice(i-p+1,i+1).reduce((a,b)=>a+b,0)/p;});
 }
-
-// ── SIGNAL (6 CONDITIONS) ────────
-let lastSignal=null, lastSignalPrice=0;
+let _lastSig=null,_lastSigPrice=0;
 
 function signal(){
   if(candles.length<30)return null;
   const cl=candles.map(c=>c.c),e9=ema(cl,9),e21=ema(cl,21);
   const rsiA=calcRSI(cl),vwap=calcVWAP(candles),bb=calcBB(cl),qqeA=calcQQE(cl);
   const atrA=calcATR(candles),volMA=calcVolMA(candles);
-  const n=candles.length-1;
-  const E9=e9[n],E21=e21[n],RSI=rsiA[n],VW=vwap[n],BB=bb[n],QQE=qqeA[n],QQEp=qqeA[n-1],price=cl[n];
+  const n=candles.length-1,E9=e9[n],E21=e21[n],RSI=rsiA[n],VW=vwap[n],BB=bb[n],QQE=qqeA[n],QQEp=qqeA[n-1],price=cl[n];
   const ATR=atrA[n],curVol=candles[n].v,avgVol=volMA[n];
-
-  // Store ATR for trade form
-  window._lastATR=ATR;
-
-  // Update spread/ATR bar
-  const atrPct=ATR&&price?(ATR/price*100):0;
-  document.getElementById('atrVal').textContent=ATR?ATR.toFixed(price>100?1:4):'—';
-  const volRatio=curVol&&avgVol?curVol/avgVol:1;
-  const highVol=volRatio>2;
-  document.getElementById('volWarning').style.display=highVol?'':'none';
-  if(ATR&&price){document.getElementById('atrHint').textContent=`ATR SL: ×1 = ${(ATR).toFixed(price>100?0:2)} · TP: ×2 = ${(ATR*2).toFixed(price>100?0:2)}`;}
-
+  window._atr=ATR;
+  // Update ATR/spread bar
+  document.getElementById('atrVal').textContent=ATR?ATR.toFixed(price>100?1:5):'—';
+  const vRatio=curVol&&avgVol?curVol/avgVol:1;
+  document.getElementById('volRatioVal').textContent=vRatio.toFixed(2)+'×';
+  document.getElementById('volWarn').style.display=vRatio>2?'':'none';
   // 6 conditions
-  const c1=E9>E21;                          // EMA trend
-  const c2=QQE<50&&QQE>QQEp;               // QQE rising
-  const c3=price>VW;                         // above VWAP
-  const c4=RSI>50&&RSI<70;                  // RSI bullish not OB
-  const c5=BB&&price>BB.mid;                // above BB mid
-  const c6=avgVol&&curVol>avgVol*1.1;       // volume above avg
-
+  const c1=E9>E21,c2=QQE<50&&QQE>QQEp,c3=price>VW,c4=RSI>50&&RSI<70,c5=BB&&price>BB.mid,c6=avgVol&&curVol>avgVol*1.1;
   const b1=!c1,b2=QQE>50&&QQE<QQEp,b3=price<VW,b4=RSI<50&&RSI>30,b5=BB&&price<BB.mid,b6=avgVol&&curVol>avgVol*1.1;
-
-  const bs=[c1,c2,c3,c4,c5,c6].filter(Boolean).length;
-  const ss=[b1,b2,b3,b4,b5,b6].filter(Boolean).length;
+  const bs=[c1,c2,c3,c4,c5,c6].filter(Boolean).length,ss=[b1,b2,b3,b4,b5,b6].filter(Boolean).length;
   const isBuy=bs>=ss,score=isBuy?bs:ss,conds=isBuy?[c1,c2,c3,c4,c5,c6]:[b1,b2,b3,b4,b5,b6];
-
   document.querySelectorAll('.sdot').forEach((d,i)=>{d.className='sdot '+(conds[i]?'on':'off');});
-
   const badge=document.getElementById('signalBadge'),sigText=document.getElementById('sigText'),slTp=document.getElementById('slTpBadge');
-  let newSig=null;
-
+  let newSig='WAIT';
   if(score>=4&&isBuy){
     const sl=ATR?+(price-ATR).toFixed(4):+(price*0.997).toFixed(4);
     const tp=ATR?+(price+ATR*2).toFixed(4):+(price*1.006).toFixed(4);
@@ -493,36 +458,28 @@ function signal(){
     badge.textContent='▼ SELL';badge.className='sig-sell';sigText.textContent=score+'/6 confirmed · short';
     slTp.innerHTML=`<span style="color:var(--red)">SL ${sl.toFixed(price>100?0:4)}</span><br><span style="color:var(--green)">TP ${tp.toFixed(price>100?0:4)}</span>`;
     newSig='SELL';
-  }else{
-    badge.textContent='◈ WAIT';badge.className='sig-wait';sigText.textContent=score+'/6 · need 4+';slTp.innerHTML='';
-    newSig='WAIT';
-  }
-
-  // Log signal transitions
-  if(newSig!=='WAIT'&&newSig!==lastSignal){
-    if(lastSignal&&lastSignal!=='WAIT'&&lastSignalPrice){
-      const outcome=lastSignal==='BUY'?(price>lastSignalPrice?'WIN':'LOSS'):(price<lastSignalPrice?'WIN':'LOSS');
-      updateLastSigOutcome(outcome,price);
+  }else{badge.textContent='◈ WAIT';badge.className='sig-wait';sigText.textContent=score+'/6 · need 4+';slTp.innerHTML='';}
+  // Signal log
+  if(newSig!=='WAIT'&&newSig!==_lastSig){
+    if(_lastSig&&_lastSig!=='WAIT'&&_lastSigPrice){
+      const oc=_lastSig==='BUY'?(price>_lastSigPrice?'WIN':'LOSS'):(price<_lastSigPrice?'WIN':'LOSS');
+      updateSigOutcome(oc,price);
     }
-    logSignal(newSig,price,score);
+    logSig(newSig,price,score);
   }
-  lastSignal=newSig;lastSignalPrice=newSig!=='WAIT'?price:lastSignalPrice;
-
+  _lastSig=newSig;if(newSig!=='WAIT')_lastSigPrice=price;
+  // Store for AI
+  window._ind={symbol,interval,price,E9,E21,RSI,VW,QQE,ATR,vRatio,score,isBuy,sig:newSig};
   const last=candles[n];
   document.getElementById('iO').textContent=last.o.toFixed(2);document.getElementById('iH').textContent=last.h.toFixed(2);
   document.getElementById('iL').textContent=last.l.toFixed(2);document.getElementById('iC').textContent=last.c.toFixed(2);
   document.getElementById('iV').textContent=fv(last.v);document.getElementById('iEMA9').textContent=E9?E9.toFixed(1):'—';
   document.getElementById('iEMA21').textContent=E21?E21.toFixed(1):'—';document.getElementById('iVWAP').textContent=VW?VW.toFixed(1):'—';
   document.getElementById('rsiVal').textContent=RSI?RSI.toFixed(1):'—';document.getElementById('qqeVal').textContent=QQE?QQE.toFixed(1):'—';
-
-  // Store for AI
-  window._lastIndicators={symbol,interval,price,E9,E21,RSI,VW,BB,QQE,ATR,volRatio,score,isBuy,signal:newSig,atrPct:atrPct.toFixed(2)};
-
   return{e9,e21,vwap,bb,rsiA,qqeA};
 }
 function fv(v){return v>=1e6?(v/1e6).toFixed(1)+'M':v>=1e3?(v/1e3).toFixed(1)+'K':v.toFixed(0);}
 
-// ── DRAWING ──────────────────────
 function draw(){
   if(!candles.length)return;
   const ind=signal(),dpr=devicePixelRatio,W=mainC.width/dpr,H=mainC.height/dpr;
@@ -587,7 +544,6 @@ function drawQQE(arr){
   vis.forEach((v,i)=>{if(v==null)return;const x=i*gap+gap/2,y=sy(v);if(!s){qCtx.moveTo(x,y);s=true;}else qCtx.lineTo(x,y);});qCtx.stroke();qCtx.restore();
 }
 
-// ── BINANCE CONNECTION (UNCHANGED) ──
 async function fetchHistory(){
   try{
     const r=await fetch(`https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=${interval}&limit=${MAX_C}`);
@@ -610,9 +566,6 @@ function connectWS(){
     document.getElementById('livePrice').style.color=c.c>=prev?'var(--green)':'var(--red)';
     document.getElementById('priceChange').textContent=(pct>=0?'+':'')+pct.toFixed(3)+'%';
     document.getElementById('priceChange').style.color=pct>=0?'var(--green)':'var(--red)';
-    // Simulated spread from tick movement
-    const spread=Math.abs(c.c-prev);
-    document.getElementById('spreadVal').textContent=spread>0?spread.toFixed(c.c>100?2:5):'<tick';
     currentPrice=c.c;checkSLTP();
     if(drawerOpen){document.getElementById('formPrice').textContent=c.c.toFixed(2);renderDrawer();}
     if(raf)cancelAnimationFrame(raf);raf=requestAnimationFrame(draw);
@@ -620,8 +573,8 @@ function connectWS(){
   ws.onerror=()=>{dot.className='cdot err';lbl.textContent='ERR';};
   ws.onclose=()=>{dot.className='cdot';lbl.textContent='—';setTimeout(connectWS,3000);};
 }
-function setPair(s,btn){symbol=s;document.querySelectorAll('.pair-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');candles=[];lastSignal=null;fetchHistory().then(connectWS);}
-function setTF(tf,btn){interval=tf;document.querySelectorAll('.tf-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');candles=[];lastSignal=null;fetchHistory().then(connectWS);}
+function setPair(s,btn){symbol=s;document.querySelectorAll('.pair-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');candles=[];fetchHistory().then(connectWS);}
+function setTF(tf,btn){interval=tf;document.querySelectorAll('.tf-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');candles=[];fetchHistory().then(connectWS);}
 
 // ════════════════════════════════
 // PAPER TRADING
@@ -645,6 +598,7 @@ function closeDrawer(){
   document.getElementById('drawerBackdrop').classList.remove('show');
 }
 
+// Swipe down to close
 let _ty=0;
 document.getElementById('drawer').addEventListener('touchstart',e=>{_ty=e.touches[0].clientY;},{passive:true});
 document.getElementById('drawer').addEventListener('touchend',e=>{if(e.changedTouches[0].clientY-_ty>80)closeDrawer();},{passive:true});
@@ -662,7 +616,7 @@ function executeTrade(side){
   const amt=parseFloat(document.getElementById('tradeAmt').value)||100;
   if(amt<=0){toast('⚠ Invalid amount');return;}if(amt>acct.bal){toast('⚠ Insufficient balance');return;}
   const slIn=parseFloat(document.getElementById('tradeSL').value),tpIn=parseFloat(document.getElementById('tradeTP').value);
-  const ATR=window._lastATR||0;
+  const ATR=window._atr||0;
   const sl=slIn||(side==='LONG'?(ATR?+(price-ATR).toFixed(4):+(price*0.997).toFixed(4)):(ATR?+(price+ATR).toFixed(4):+(price*1.003).toFixed(4)));
   const tp=tpIn||(side==='LONG'?(ATR?+(price+ATR*2).toFixed(4):+(price*1.006).toFixed(4)):(ATR?+(price-ATR*2).toFixed(4):+(price*0.994).toFixed(4)));
   acct.bal-=amt;
@@ -718,13 +672,10 @@ function renderDrawer(){
   if(!acct.hist.length){hl.innerHTML='<div class="empty"><div class="empty-icon">📜</div>No closed trades</div>';}
   else hl.innerHTML='<div class="hist-card">'+acct.hist.slice(0,50).map(h=>{
     const c=h.pnl>=0?'var(--green)':'var(--red)';
-    return`<div class="hist-row"><div><div class="hist-pair">${h.pair}<span style="font-size:9px;color:${h.side==='LONG'?'var(--green)':'var(--red)'}">${h.side}</span></div>
+    return`<div class="hist-row"><div class="hist-left"><div class="hist-pair">${h.pair}<span style="font-size:9px;color:${h.side==='LONG'?'var(--green)':'var(--red)'}">${h.side}</span></div>
     <div class="hist-meta">${h.entry.toFixed(2)} → ${h.exit.toFixed(2)} · ${h.time}</div></div>
     <span class="hist-pnl" style="color:${c}">${h.pnl>=0?'+':''}$${h.pnl.toFixed(2)}</span></div>`;
   }).join('')+'</div>';
-
-  // Signal log
-  renderSigLog();
 
   // Stats
   const wins=acct.hist.filter(h=>h.pnl>0),losses=acct.hist.filter(h=>h.pnl<=0);
@@ -734,43 +685,41 @@ function renderDrawer(){
   document.getElementById('sWorst').textContent=losses.length?'-$'+(Math.abs(Math.min(...losses.map(h=>h.pnl)))).toFixed(2):'—';
   document.getElementById('sAvgW').textContent=wins.length?'+$'+(wins.reduce((s,h)=>s+h.pnl,0)/wins.length).toFixed(2):'—';
   document.getElementById('sAvgL').textContent=losses.length?'-$'+(Math.abs(losses.reduce((s,h)=>s+h.pnl,0)/losses.length)).toFixed(2):'—';
-  const sigLogs=loadSigLog();
-  const sigWins=sigLogs.filter(s=>s.outcome==='WIN'),sigTotal=sigLogs.filter(s=>s.outcome);
-  document.getElementById('sSigWR').textContent=sigTotal.length?(sigWins.length/sigTotal.length*100).toFixed(0)+'%':'—';
-  document.getElementById('sSigTot').textContent=sigLogs.length;
+  // Signal stats
+  const sl=loadSigLog(),slWins=sl.filter(s=>s.outcome==='WIN'),slDone=sl.filter(s=>s.outcome);
+  document.getElementById('sSigWR').textContent=slDone.length?(slWins.length/slDone.length*100).toFixed(0)+'%':'—';
+  document.getElementById('sSigTot').textContent=sl.length;
+  // Signal log tab
+  renderSigLog();
 }
 
 function updateFab(){const n=acct.pos.length,b=document.getElementById('fabBadge');b.style.display=n?'flex':'none';b.textContent=n;}
 function resetAcct(){if(!confirm('Reset to $10,000?'))return;acct={bal:START,pos:[],hist:[]};saveAcct();updateFab();renderDrawer();toast('Reset ✓');}
 
+let _tt;function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove('show'),2400);}
+
 // ════════════════════════════════
 // SIGNAL LOG
 // ════════════════════════════════
 function loadSigLog(){try{return JSON.parse(localStorage.getItem('sigLog'))||[];}catch(e){return[];}}
-function saveSigLog(log){localStorage.setItem('sigLog',JSON.stringify(log));}
-
-function logSignal(type,price,score){
-  const log=loadSigLog();
-  log.unshift({id:Date.now(),type,pair:symbol,tf:interval,price,score,time:new Date().toLocaleTimeString(),date:new Date().toLocaleDateString(),outcome:null,exitPrice:null});
-  if(log.length>200)log.pop();
-  saveSigLog(log);
+function saveSigLog(l){localStorage.setItem('sigLog',JSON.stringify(l));}
+function logSig(type,price,score){
+  const l=loadSigLog();
+  l.unshift({id:Date.now(),type,pair:symbol,tf:interval,price,score,time:new Date().toLocaleTimeString(),outcome:null});
+  if(l.length>200)l.pop();saveSigLog(l);
 }
-
-function updateLastSigOutcome(outcome,exitPrice){
-  const log=loadSigLog();
-  const last=log.find(s=>s.outcome===null);
-  if(last){last.outcome=outcome;last.exitPrice=exitPrice;saveSigLog(log);}
+function updateSigOutcome(outcome,exitPrice){
+  const l=loadSigLog(),last=l.find(s=>s.outcome===null);
+  if(last){last.outcome=outcome;last.exitPrice=exitPrice;saveSigLog(l);}
 }
-
 function renderSigLog(){
-  const log=loadSigLog();
-  const el=document.getElementById('sigLogList');
-  if(!log.length){el.innerHTML='<div class="empty"><div class="empty-icon">📡</div>No signals logged yet.<br>Signals auto-log when BUY/SELL fires.</div>';return;}
-  el.innerHTML='<div class="siglog-card">'+log.slice(0,50).map(s=>{
-    const oc=s.outcome?`<span class="siglog-outcome" style="color:${s.outcome==='WIN'?'var(--green)':'var(--red)'}">${s.outcome}</span>`:'<span style="color:var(--muted);font-size:10px">OPEN</span>';
+  const l=loadSigLog(),el=document.getElementById('sigLogList');
+  if(!l.length){el.innerHTML='<div class="empty"><div class="empty-icon">📡</div>No signals yet — BUY/SELL auto-log here</div>';return;}
+  el.innerHTML='<div class="siglog-card">'+l.slice(0,50).map(s=>{
+    const oc=s.outcome?`<span style="font-weight:700;color:${s.outcome==='WIN'?'var(--green)':'var(--red)'}">${s.outcome}</span>`:'<span style="color:var(--muted);font-size:10px">OPEN</span>';
     return`<div class="siglog-row">
-      <div><span class="siglog-badge siglog-${s.type.toLowerCase()}">${s.type}</span> <span style="color:var(--muted);font-size:9px">${s.pair} ${s.tf}</span></div>
-      <div style="text-align:center;font-size:10px;color:var(--muted)">${s.score}/6<br>${s.time}</div>
+      <span class="${s.type==='BUY'?'siglog-b':'siglog-s'}">${s.type}</span>
+      <span style="color:var(--muted);font-size:10px">${s.pair} ${s.tf} · ${s.score}/6 · ${s.time}</span>
       <div style="text-align:right">${oc}<br><span style="font-size:9px;color:var(--muted)">@${s.price.toFixed(s.price>100?0:4)}</span></div>
     </div>`;
   }).join('')+'</div>';
@@ -779,14 +728,17 @@ function renderSigLog(){
 // ════════════════════════════════
 // GROQ AI
 // ════════════════════════════════
-let groqKey=localStorage.getItem('groqKey')||'';
+let _groqKey=localStorage.getItem('groqKey')||'';
+let _aiOpen=false;
 
 function openAI(){
+  _aiOpen=true;
   document.getElementById('aiDrawer').classList.add('open');
   document.getElementById('drawerBackdrop').classList.add('show');
-  if(groqKey)document.getElementById('aiKeyInput').value='••••••••';
+  if(_groqKey)document.getElementById('aiKeyIn').placeholder='API key saved ✓';
 }
 function closeAI(){
+  _aiOpen=false;
   document.getElementById('aiDrawer').classList.remove('open');
   document.getElementById('drawerBackdrop').classList.remove('show');
 }
@@ -794,66 +746,41 @@ document.getElementById('aiDrawer').addEventListener('touchstart',e=>{_ty=e.touc
 document.getElementById('aiDrawer').addEventListener('touchend',e=>{if(e.changedTouches[0].clientY-_ty>80)closeAI();},{passive:true});
 
 function saveGroqKey(){
-  const v=document.getElementById('aiKeyInput').value.trim();
-  if(!v||v==='••••••••'){toast('⚠ Enter a valid key');return;}
-  groqKey=v;localStorage.setItem('groqKey',v);
-  document.getElementById('aiKeyInput').value='••••••••';
+  const v=document.getElementById('aiKeyIn').value.trim();
+  if(!v){toast('⚠ Enter a key');return;}
+  _groqKey=v;localStorage.setItem('groqKey',v);
+  document.getElementById('aiKeyIn').value='';
+  document.getElementById('aiKeyIn').placeholder='API key saved ✓';
   toast('✓ Groq key saved');
 }
-
 async function runGroqAnalysis(){
-  if(!groqKey){toast('⚠ Add Groq API key first');return;}
-  const ind=window._lastIndicators;
+  if(!_groqKey){toast('⚠ Add Groq API key first');return;}
+  const ind=window._ind;
   if(!ind||!ind.price){toast('⚠ Waiting for market data');return;}
+  const btn=document.getElementById('aiRunBtn');
+  const out=document.getElementById('aiOut');
+  btn.disabled=true;out.textContent='🔮 Analyzing…';
+  const recent=loadSigLog().slice(0,5).map(s=>`${s.type}@${s.price.toFixed(2)}→${s.outcome||'open'}`).join(', ');
+  const prompt=`Concise crypto trading assistant. Analyze this real-time snapshot in 4 sentences: (1) market bias, (2) signal reliability, (3) key risk, (4) one actionable tip.
 
-  const btn=document.getElementById('aiAnalyzeBtn');
-  const spinner=document.getElementById('aiSpinner');
-  const result=document.getElementById('aiResult');
-  btn.disabled=true;spinner.style.display='block';result.textContent='';
-
-  const sigLog=loadSigLog().slice(0,5);
-  const recentSigs=sigLog.map(s=>`${s.type} @ ${s.price.toFixed(2)} → ${s.outcome||'open'}`).join(', ');
-
-  const prompt=`You are a concise crypto trading assistant. Analyze this real-time market snapshot and give a brief, practical assessment.
-
-MARKET DATA (${ind.symbol} ${ind.interval}):
-- Price: ${ind.price.toFixed(2)}
-- Signal: ${ind.signal} (${ind.score}/6 conditions)
-- EMA9: ${ind.E9?.toFixed(2)||'—'} | EMA21: ${ind.E21?.toFixed(2)||'—'} | Trend: ${ind.E9>ind.E21?'BULLISH':'BEARISH'}
-- RSI: ${ind.RSI?.toFixed(1)||'—'}
-- VWAP: ${ind.VW?.toFixed(2)||'—'} | Price vs VWAP: ${ind.price>ind.VW?'ABOVE':'BELOW'}
-- QQE: ${ind.QQE?.toFixed(2)||'—'}
-- ATR: ${ind.ATR?.toFixed(2)||'—'} (${ind.atrPct}% of price)
-- Volume ratio vs avg: ${ind.volRatio?.toFixed(2)||'—'}×
-- Recent signals: ${recentSigs||'none yet'}
-
-Give a 3-4 sentence analysis: (1) overall market bias, (2) whether current signal is trustworthy, (3) key risk to watch, (4) one actionable suggestion. Be direct and concise.`;
-
+${ind.symbol} ${ind.interval} | Price:${ind.price.toFixed(2)} | Signal:${ind.sig}(${ind.score}/6) | EMA9:${ind.E9?.toFixed(1)} EMA21:${ind.E21?.toFixed(1)} | RSI:${ind.RSI?.toFixed(1)} | VWAP:${ind.VW?.toFixed(1)} | QQE:${ind.QQE?.toFixed(1)} | ATR:${ind.ATR?.toFixed(2)} | VolRatio:${ind.vRatio?.toFixed(2)}x | Recent signals: ${recent||'none'}`;
   try{
     const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{
       method:'POST',
-      headers:{'Content-Type':'application/json','Authorization':`Bearer ${groqKey}`},
-      body:JSON.stringify({
-        model:'llama3-8b-8192',
-        messages:[{role:'user',content:prompt}],
-        max_tokens:300,temperature:0.4
-      })
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+_groqKey},
+      body:JSON.stringify({model:'llama3-8b-8192',messages:[{role:'user',content:prompt}],max_tokens:250,temperature:0.4})
     });
-    if(!res.ok){const err=await res.json();throw new Error(err.error?.message||'API error');}
-    const data=await res.json();
-    result.textContent=data.choices[0].message.content;
+    if(!res.ok){const e=await res.json();throw new Error(e.error?.message||'API error');}
+    const d=await res.json();
+    out.textContent=d.choices[0].message.content;
   }catch(err){
-    result.textContent='Error: '+err.message+'\n\nMake sure your Groq API key is correct. Get a free key at console.groq.com';
-  }finally{
-    btn.disabled=false;spinner.style.display='none';
+    out.textContent='Error: '+err.message+'\n\nCheck your Groq key at console.groq.com (free)';
   }
+  btn.disabled=false;
 }
-
-let _tt;function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove('show'),2400);}
 
 // INIT
 resize();updateFab();fetchHistory().then(connectWS);
-if(groqKey)document.getElementById('aiKeyInput').placeholder='Key saved ✓';
 </script>
 </body>
 </html>
