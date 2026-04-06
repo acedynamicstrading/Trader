@@ -19,8 +19,6 @@
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
 html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'JetBrains Mono',monospace;-webkit-font-smoothing:antialiased;}
 #app{display:flex;flex-direction:column;height:100vh;height:100dvh;}
-
-/* TOP BAR */
 #topBar{flex-shrink:0;padding:calc(var(--st) + 10px) 14px 10px;background:var(--panel);border-bottom:1px solid var(--border);display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;}
 .logo{font-family:'Oxanium',sans-serif;font-weight:800;font-size:18px;color:var(--green);letter-spacing:1px;}
 #priceBlock{text-align:center;}
@@ -31,16 +29,12 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .cdot.live{background:var(--green);box-shadow:0 0 8px var(--green);animation:pulse 2s infinite;}
 .cdot.err{background:var(--red);}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
-
-/* CONTROL ROW */
 #controlRow{flex-shrink:0;display:flex;align-items:center;background:var(--panel);border-bottom:1px solid var(--border);overflow-x:auto;padding:0 6px;}
 #controlRow::-webkit-scrollbar{display:none;}
 .pair-btn,.tf-btn{flex-shrink:0;padding:11px 11px;border:none;background:transparent;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;cursor:pointer;position:relative;transition:color 0.15s;white-space:nowrap;}
 .pair-btn.active,.tf-btn.active{color:var(--blue);}
 .pair-btn.active::after,.tf-btn.active::after{content:'';position:absolute;bottom:0;left:10%;right:10%;height:2px;background:var(--blue);border-radius:2px 2px 0 0;}
 .ctrl-sep{width:1px;height:16px;background:var(--border);flex-shrink:0;margin:0 2px;align-self:center;}
-
-/* SIGNAL BAR */
 #signalBar{flex-shrink:0;display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--dim);border-bottom:1px solid var(--border);}
 #signalBadge{font-family:'Oxanium',sans-serif;font-weight:800;font-size:14px;padding:5px 12px;border-radius:6px;letter-spacing:1px;transition:all 0.3s;flex-shrink:0;min-width:74px;text-align:center;}
 .sig-buy{background:rgba(0,230,118,0.15);color:var(--green);border:1px solid rgba(0,230,118,0.35);}
@@ -52,50 +46,36 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .sdot.off{background:var(--red);}
 #sigText{font-size:10px;color:var(--muted);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 #slTpBadge{font-size:10px;flex-shrink:0;line-height:1.7;text-align:right;}
-
-/* CHART */
 #chartWrap{flex:1;min-height:0;position:relative;background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(33,150,243,0.04) 0%,transparent 70%);}
 #mainCanvas,#overlayCanvas{position:absolute;top:0;left:0;display:block;}
 #overlayCanvas{cursor:crosshair;}
-
-/* SUB PANELS */
 #subPanels{flex-shrink:0;}
 .sub-panel{height:58px;position:relative;border-top:1px solid var(--border);background:var(--panel);}
 .sub-panel canvas{position:absolute;top:0;left:0;}
 .sub-label{position:absolute;top:4px;left:8px;z-index:2;font-size:9px;color:var(--muted);pointer-events:none;display:flex;gap:6px;align-items:center;}
 .sub-val{font-weight:600;font-size:10px;}
-
-/* OHLCV BAR */
 #ohlcBar{flex-shrink:0;display:flex;background:var(--panel);border-top:1px solid var(--border);overflow-x:auto;padding-bottom:var(--sb);}
 #ohlcBar::-webkit-scrollbar{display:none;}
 .ohlc-item{flex-shrink:0;padding:7px 12px;display:flex;flex-direction:column;align-items:center;border-right:1px solid var(--border);}
 .ohlc-lbl{font-size:8px;color:var(--muted);letter-spacing:1px;margin-bottom:2px;}
 .ohlc-val{font-size:12px;font-weight:600;}
-
-/* FAB */
 #tradeFab{position:fixed;bottom:calc(var(--sb) + 18px);right:16px;z-index:100;width:58px;height:58px;border-radius:50%;background:var(--blue);border:none;color:#fff;font-size:24px;cursor:pointer;box-shadow:0 4px 24px rgba(33,150,243,0.5);display:flex;align-items:center;justify-content:center;transition:transform 0.2s;}
 #tradeFab:active{transform:scale(0.88);}
 #fabBadge{position:absolute;top:-3px;right:-3px;width:18px;height:18px;border-radius:50%;background:var(--green);color:#000;font-size:10px;font-weight:800;display:none;align-items:center;justify-content:center;border:2px solid var(--bg);}
-
-/* DRAWER */
 #drawerBackdrop{position:fixed;inset:0;z-index:199;background:rgba(0,0,0,0.65);opacity:0;pointer-events:none;transition:opacity 0.3s;}
 #drawerBackdrop.show{opacity:1;pointer-events:all;}
 #drawer{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--panel);border-radius:20px 20px 0 0;border-top:1px solid var(--border);transform:translateY(100%);transition:transform 0.35s cubic-bezier(0.32,0.72,0,1);display:flex;flex-direction:column;max-height:88dvh;padding-bottom:var(--sb);}
 #drawer.open{transform:translateY(0);}
 .drag-pill{width:40px;height:5px;border-radius:3px;background:var(--border);margin:12px auto 0;flex-shrink:0;}
 #drawerTabs{display:flex;border-bottom:1px solid var(--border);flex-shrink:0;margin-top:10px;}
-.dtab{flex:1;padding:12px 4px;text-align:center;font-size:11px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.15s;font-family:'JetBrains Mono',monospace;}
+.dtab{flex:1;padding:10px 2px;text-align:center;font-size:10px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.15s;font-family:'JetBrains Mono',monospace;}
 .dtab.active{color:var(--blue);border-bottom-color:var(--blue);}
 #drawerBody{overflow-y:auto;flex:1;padding:14px;}
 #drawerBody::-webkit-scrollbar{display:none;}
-
-/* ACCOUNT STRIP */
 .acct-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;}
 .acct-card{background:var(--dim);border-radius:10px;padding:10px;border:1px solid var(--border);}
 .ac-lbl{font-size:8px;color:var(--muted);letter-spacing:1.5px;margin-bottom:4px;}
 .ac-val{font-family:'Oxanium',sans-serif;font-size:14px;font-weight:700;}
-
-/* TRADE FORM */
 .trade-form{background:var(--dim);border-radius:12px;padding:14px;border:1px solid var(--border);margin-bottom:12px;}
 .form-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
 .form-pair{font-size:14px;font-weight:700;}
@@ -115,8 +95,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .sell-btn{background:rgba(245,65,79,0.18);color:var(--red);border:1px solid rgba(245,65,79,0.4);}
 .buy-btn:active{background:var(--green);color:#000;}
 .sell-btn:active{background:var(--red);color:#fff;}
-
-/* POSITIONS */
 .pos-card{background:var(--dim);border-radius:10px;border:1px solid var(--border);padding:13px;margin-bottom:10px;}
 .pos-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;}
 .pos-name{font-size:13px;font-weight:700;}
@@ -129,66 +107,49 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .pos-pnl{font-family:'Oxanium',sans-serif;font-size:17px;font-weight:800;}
 .close-btn{padding:9px 20px;border-radius:7px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:12px;cursor:pointer;font-family:'JetBrains Mono',monospace;transition:all 0.15s;min-height:40px;}
 .close-btn:active{background:var(--red);color:#fff;border-color:var(--red);}
-
-/* HISTORY */
 .hist-card{background:var(--dim);border-radius:10px;border:1px solid var(--border);overflow:hidden;}
 .hist-row{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid var(--border);}
 .hist-row:last-child{border-bottom:none;}
 .hist-pair{font-size:12px;font-weight:600;display:flex;gap:8px;align-items:center;margin-bottom:2px;}
 .hist-meta{font-size:10px;color:var(--muted);}
 .hist-pnl{font-family:'Oxanium',sans-serif;font-size:15px;font-weight:700;}
-
-/* STATS */
 .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
 .stat-card{background:var(--dim);border-radius:10px;border:1px solid var(--border);padding:12px;}
 .stat-lbl{font-size:9px;color:var(--muted);letter-spacing:1.5px;margin-bottom:5px;}
 .stat-val{font-family:'Oxanium',sans-serif;font-size:20px;font-weight:800;}
 .reset-btn{width:100%;padding:15px;border-radius:10px;border:1px solid rgba(245,65,79,0.4);background:rgba(245,65,79,0.08);color:var(--red);font-size:13px;font-weight:600;cursor:pointer;font-family:'JetBrains Mono',monospace;min-height:50px;}
 .reset-btn:active{background:rgba(245,65,79,0.2);}
+.empty{text-align:center;padding:32px 20px;color:var(--muted);font-size:12px;}
+.empty-icon{font-size:32px;margin-bottom:8px;}
+#toast{position:fixed;bottom:calc(var(--sb) + 88px);left:50%;transform:translateX(-50%) translateY(8px);background:var(--card);border:1px solid var(--border);padding:10px 22px;border-radius:24px;font-size:12px;font-weight:600;opacity:0;transition:all 0.25s;z-index:400;pointer-events:none;white-space:nowrap;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
-/* SPREAD BAR */
-#spreadBar{flex-shrink:0;display:flex;align-items:center;gap:12px;padding:4px 12px;background:var(--bg);border-bottom:1px solid var(--border);font-size:10px;color:var(--muted);}
-#atrVal{color:var(--orange);font-weight:600;}
-#volWarn{color:var(--yellow);font-weight:700;display:none;}
-
-/* SIGNAL LOG */
-.siglog-card{background:var(--dim);border-radius:10px;border:1px solid var(--border);overflow:hidden;margin-bottom:12px;}
-.siglog-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid var(--border);font-size:11px;}
-.siglog-row:last-child{border-bottom:none;}
-.siglog-b{font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;background:rgba(0,230,118,0.15);color:var(--green);}
-.siglog-s{font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;background:rgba(245,65,79,0.15);color:var(--red);}
-
-/* AI DRAWER */
-#aiFab{position:fixed;bottom:calc(var(--sb) + 86px);right:16px;z-index:100;width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,#6a1be0,#b06aff);border:none;color:#fff;font-size:18px;cursor:pointer;box-shadow:0 4px 20px rgba(176,106,255,0.5);display:flex;align-items:center;justify-content:center;transition:transform 0.2s;}
+/* ── NEW FEATURES CSS ── */
+#aiFab{position:fixed;bottom:calc(var(--sb) + 86px);right:16px;z-index:100;width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,#6a1be0,#b06aff);border:none;color:#fff;font-size:18px;cursor:pointer;box-shadow:0 4px 20px rgba(176,106,255,0.5);display:flex;align-items:center;justify-content:center;}
 #aiFab:active{transform:scale(0.88);}
-#aiDrawer{position:fixed;bottom:0;left:0;right:0;z-index:300;background:var(--panel);border-radius:20px 20px 0 0;border-top:2px solid var(--purple);transform:translateY(100%);transition:transform 0.35s cubic-bezier(0.32,0.72,0,1);display:flex;flex-direction:column;max-height:80dvh;padding-bottom:var(--sb);}
+#aiDrawer{position:fixed;bottom:0;left:0;right:0;z-index:250;background:var(--panel);border-radius:20px 20px 0 0;border-top:2px solid var(--purple);transform:translateY(100%);transition:transform 0.35s cubic-bezier(0.32,0.72,0,1);display:flex;flex-direction:column;max-height:80dvh;padding-bottom:var(--sb);}
 #aiDrawer.open{transform:translateY(0);}
 #aiHead{padding:14px 16px 10px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-shrink:0;}
-#aiCloseBtn{margin-left:auto;background:transparent;border:none;color:var(--muted);font-size:20px;cursor:pointer;padding:4px 8px;}
+#aiCloseBtn{margin-left:auto;background:transparent;border:none;color:var(--muted);font-size:22px;cursor:pointer;padding:2px 8px;line-height:1;}
 #aiKeyRow{padding:10px 16px;border-bottom:1px solid var(--border);display:flex;gap:8px;align-items:center;flex-shrink:0;}
 #aiKeyIn{flex:1;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:12px;outline:none;}
 #aiKeyIn:focus{border-color:var(--purple);}
-#aiSaveBtn{padding:10px 14px;border-radius:8px;background:var(--purple);border:none;color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:'JetBrains Mono',monospace;}
+#aiSaveBtn{padding:10px 14px;border-radius:8px;background:var(--purple);border:none;color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:'JetBrains Mono',monospace;white-space:nowrap;}
 #aiBody{overflow-y:auto;flex:1;padding:16px;}
 #aiBody::-webkit-scrollbar{display:none;}
-#aiRunBtn{width:100%;padding:15px;border-radius:10px;background:linear-gradient(135deg,rgba(106,27,224,0.3),rgba(176,106,255,0.3));border:1px solid var(--purple);color:var(--purple);font-family:'Oxanium',sans-serif;font-size:16px;font-weight:800;cursor:pointer;margin-bottom:14px;}
+#aiRunBtn{width:100%;padding:14px;border-radius:10px;background:rgba(176,106,255,0.15);border:1px solid var(--purple);color:var(--purple);font-family:'Oxanium',sans-serif;font-size:15px;font-weight:800;cursor:pointer;margin-bottom:14px;}
 #aiRunBtn:active{background:var(--purple);color:#fff;}
-#aiRunBtn:disabled{opacity:0.4;}
-#aiOut{background:var(--dim);border-radius:12px;border:1px solid var(--border);padding:14px;font-size:12px;line-height:1.7;color:var(--text);white-space:pre-wrap;}
-
-/* EMPTY */
-.empty{text-align:center;padding:32px 20px;color:var(--muted);font-size:12px;}
-.empty-icon{font-size:32px;margin-bottom:8px;}
-
-/* TOAST */
-#toast{position:fixed;bottom:calc(var(--sb) + 88px);left:50%;transform:translateX(-50%) translateY(8px);background:var(--card);border:1px solid var(--border);padding:10px 22px;border-radius:24px;font-size:12px;font-weight:600;opacity:0;transition:all 0.25s;z-index:400;pointer-events:none;white-space:nowrap;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
-#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+#aiRunBtn:disabled{opacity:0.4;cursor:not-allowed;}
+#aiOut{background:var(--dim);border-radius:12px;border:1px solid var(--border);padding:14px;font-size:12px;line-height:1.8;color:var(--text);white-space:pre-wrap;min-height:60px;}
+.slog-card{background:var(--dim);border-radius:10px;border:1px solid var(--border);overflow:hidden;margin-bottom:12px;}
+.slog-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid var(--border);font-size:11px;}
+.slog-row:last-child{border-bottom:none;}
+.slog-buy{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;background:rgba(0,230,118,0.15);color:var(--green);}
+.slog-sell{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;background:rgba(245,65,79,0.15);color:var(--red);}
 </style>
 </head>
 <body>
 <div id="app">
-
-  <!-- TOP BAR -->
   <div id="topBar">
     <div class="logo">⚡LCP</div>
     <div id="priceBlock">
@@ -200,8 +161,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
       <span id="connLabel">—</span>
     </div>
   </div>
-
-  <!-- CONTROLS -->
   <div id="controlRow">
     <button class="pair-btn active" onclick="setPair('BTCUSDT',this)">BTC</button>
     <button class="pair-btn" onclick="setPair('ETHUSDT',this)">ETH</button>
@@ -215,32 +174,19 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
     <button class="tf-btn" onclick="setTF('15m',this)">15m</button>
     <button class="tf-btn" onclick="setTF('1h',this)">1h</button>
   </div>
-
-  <!-- SIGNAL BAR -->
   <div id="signalBar">
     <div id="signalBadge" class="sig-wait">WAIT</div>
     <div id="condRow">
       <div class="sdot"></div><div class="sdot"></div><div class="sdot"></div>
-      <div class="sdot"></div><div class="sdot"></div><div class="sdot"></div>
+      <div class="sdot"></div><div class="sdot"></div>
     </div>
     <div id="sigText">Connecting…</div>
     <div id="slTpBadge"></div>
   </div>
-
-  <!-- SPREAD / ATR BAR -->
-  <div id="spreadBar">
-    <span>ATR <span id="atrVal">—</span></span>
-    <span>VOL RATIO <span id="volRatioVal" style="color:var(--text);font-weight:600">—</span></span>
-    <span id="volWarn">⚠ HIGH VOL</span>
-  </div>
-
-  <!-- CHART -->
   <div id="chartWrap">
     <canvas id="mainCanvas"></canvas>
     <canvas id="overlayCanvas"></canvas>
   </div>
-
-  <!-- SUB PANELS -->
   <div id="subPanels">
     <div class="sub-panel" id="panelRSI">
       <canvas id="rsiCanvas"></canvas>
@@ -251,8 +197,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
       <div class="sub-label">QQE <span class="sub-val" id="qqeVal" style="color:var(--orange)">—</span></div>
     </div>
   </div>
-
-  <!-- OHLCV -->
   <div id="ohlcBar">
     <div class="ohlc-item"><div class="ohlc-lbl">OPEN</div><div class="ohlc-val" id="iO">—</div></div>
     <div class="ohlc-item"><div class="ohlc-lbl">HIGH</div><div class="ohlc-val" id="iH" style="color:var(--green)">—</div></div>
@@ -263,37 +207,13 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
     <div class="ohlc-item"><div class="ohlc-lbl">VWAP</div><div class="ohlc-val" id="iVWAP" style="color:#e040fb">—</div></div>
     <div class="ohlc-item" style="border-right:none"><div class="ohlc-lbl">VOL</div><div class="ohlc-val" id="iV">—</div></div>
   </div>
-
 </div>
 
-<!-- FAB -->
 <button id="tradeFab" onclick="openDrawer()">💼<div id="fabBadge">0</div></button>
 <button id="aiFab" onclick="openAI()">🤖</button>
-
-<!-- AI DRAWER -->
-<div id="aiDrawer">
-  <div id="aiHead">
-    <span style="font-size:18px">🤖</span>
-    <span style="font-family:'Oxanium',sans-serif;font-weight:800;font-size:15px;color:var(--purple)">Groq AI Analysis</span>
-    <button id="aiCloseBtn" onclick="closeAI()">✕</button>
-  </div>
-  <div id="aiKeyRow">
-    <input id="aiKeyIn" type="password" placeholder="Free Groq API key — console.groq.com">
-    <button id="aiSaveBtn" onclick="saveGroqKey()">SAVE</button>
-  </div>
-  <div id="aiBody">
-    <button id="aiRunBtn" onclick="runGroqAnalysis()">⚡ ANALYZE CURRENT SETUP</button>
-    <div id="aiOut" style="color:var(--muted)">Enter your free Groq key above then tap Analyze for AI commentary on current signals and indicators.</div>
-  </div>
-</div>
-
-<!-- TOAST -->
 <div id="toast"></div>
-
-<!-- BACKDROP -->
 <div id="drawerBackdrop" onclick="closeDrawer()"></div>
 
-<!-- DRAWER -->
 <div id="drawer">
   <div class="drag-pill"></div>
   <div id="drawerTabs">
@@ -309,8 +229,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
       <div class="acct-card"><div class="ac-lbl">EQUITY</div><div class="ac-val" id="acctEq">$10,000</div></div>
       <div class="acct-card"><div class="ac-lbl">P&amp;L</div><div class="ac-val" id="acctPnl">$0</div></div>
     </div>
-
-    <!-- TRADE -->
     <div id="tabTrade">
       <div class="trade-form">
         <div class="form-header">
@@ -336,14 +254,12 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
       </div>
       <div style="font-size:10px;color:var(--muted);text-align:center;padding-bottom:4px">Paper trading · no real money</div>
     </div>
-
-    <!-- POSITIONS -->
     <div id="tabPositions" style="display:none"><div id="posList"></div></div>
-
-    <!-- HISTORY -->
     <div id="tabHistory" style="display:none"><div id="histList"></div></div>
-
-    <!-- STATS -->
+    <div id="tabSignals" style="display:none">
+      <div style="font-size:10px;color:var(--muted);margin-bottom:10px">BUY/SELL signals auto-logged with outcome</div>
+      <div id="sigList"></div>
+    </div>
     <div id="tabStats" style="display:none">
       <div class="stats-grid">
         <div class="stat-card"><div class="stat-lbl">WIN RATE</div><div class="stat-val" id="sWR" style="color:var(--green)">—</div></div>
@@ -357,12 +273,22 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
       </div>
       <button class="reset-btn" onclick="resetAcct()">↺ Reset account to $10,000</button>
     </div>
+  </div>
+</div>
 
-    <!-- SIGNALS LOG -->
-    <div id="tabSignals" style="display:none">
-      <div style="font-size:10px;color:var(--muted);margin-bottom:10px;">Auto-logged BUY/SELL signals · outcome tracked when signal flips</div>
-      <div id="sigLogList"></div>
-    </div>
+<div id="aiDrawer">
+  <div id="aiHead">
+    <span style="font-size:18px">🤖</span>
+    <span style="font-family:'Oxanium',sans-serif;font-weight:800;font-size:15px;color:var(--purple)">Groq AI Analysis</span>
+    <button id="aiCloseBtn" onclick="closeAI()">✕</button>
+  </div>
+  <div id="aiKeyRow">
+    <input id="aiKeyIn" type="password" placeholder="Free Groq key — console.groq.com">
+    <button id="aiSaveBtn" onclick="saveGroqKey()">SAVE</button>
+  </div>
+  <div id="aiBody">
+    <button id="aiRunBtn" onclick="runAI()">⚡ ANALYZE CURRENT SETUP</button>
+    <div id="aiOut" style="color:var(--muted)">Paste your free Groq API key above then tap Analyze.</div>
   </div>
 </div>
 
@@ -412,70 +338,36 @@ function calcVWAP(cs){let cv=0,cvol=0;return cs.map(c=>{const tp=(c.h+c.l+c.c)/3
 function calcBB(cl,p=20,m=2){
   return cl.map((_,i)=>{if(i<p-1)return null;const sl=cl.slice(i-p+1,i+1),mn=sl.reduce((a,b)=>a+b,0)/p,sd=Math.sqrt(sl.reduce((a,b)=>a+(b-mn)**2,0)/p);return{u:mn+m*sd,mid:mn,l:mn-m*sd};});
 }
-function calcATR(cs,p=14){
-  const trs=cs.map((c,i)=>i===0?c.h-c.l:Math.max(c.h-c.l,Math.abs(c.h-cs[i-1].c),Math.abs(c.l-cs[i-1].c)));
-  const out=Array(cs.length).fill(null);if(cs.length<p)return out;
-  let sum=trs.slice(0,p).reduce((a,b)=>a+b,0);out[p-1]=sum/p;
-  for(let i=p;i<cs.length;i++){out[i]=(out[i-1]*(p-1)+trs[i])/p;}
-  return out;
-}
-function calcVolMA(cs,p=20){
-  const vols=cs.map(c=>c.v);
-  return vols.map((_,i)=>{if(i<p-1)return null;return vols.slice(i-p+1,i+1).reduce((a,b)=>a+b,0)/p;});
-}
-let _lastSig=null,_lastSigPrice=0;
 
 function signal(){
   if(candles.length<30)return null;
   const cl=candles.map(c=>c.c),e9=ema(cl,9),e21=ema(cl,21);
   const rsiA=calcRSI(cl),vwap=calcVWAP(candles),bb=calcBB(cl),qqeA=calcQQE(cl);
-  const atrA=calcATR(candles),volMA=calcVolMA(candles);
   const n=candles.length-1,E9=e9[n],E21=e21[n],RSI=rsiA[n],VW=vwap[n],BB=bb[n],QQE=qqeA[n],QQEp=qqeA[n-1],price=cl[n];
-  const ATR=atrA[n],curVol=candles[n].v,avgVol=volMA[n];
-  window._atr=ATR;
-  // Update ATR/spread bar
-  document.getElementById('atrVal').textContent=ATR?ATR.toFixed(price>100?1:5):'—';
-  const vRatio=curVol&&avgVol?curVol/avgVol:1;
-  document.getElementById('volRatioVal').textContent=vRatio.toFixed(2)+'×';
-  document.getElementById('volWarn').style.display=vRatio>2?'':'none';
-  // 6 conditions
-  const c1=E9>E21,c2=QQE<50&&QQE>QQEp,c3=price>VW,c4=RSI>50&&RSI<70,c5=BB&&price>BB.mid,c6=avgVol&&curVol>avgVol*1.1;
-  const b1=!c1,b2=QQE>50&&QQE<QQEp,b3=price<VW,b4=RSI<50&&RSI>30,b5=BB&&price<BB.mid,b6=avgVol&&curVol>avgVol*1.1;
-  const bs=[c1,c2,c3,c4,c5,c6].filter(Boolean).length,ss=[b1,b2,b3,b4,b5,b6].filter(Boolean).length;
-  const isBuy=bs>=ss,score=isBuy?bs:ss,conds=isBuy?[c1,c2,c3,c4,c5,c6]:[b1,b2,b3,b4,b5,b6];
+  const c1=E9>E21,c2=QQE<50&&QQE>QQEp,c3=price>VW,c4=RSI>50&&RSI<70,c5=BB&&price>BB.mid;
+  const b1=!c1,b2=QQE>50&&QQE<QQEp,b3=price<VW,b4=RSI<50&&RSI>30,b5=BB&&price<BB.mid;
+  const bs=[c1,c2,c3,c4,c5].filter(Boolean).length,ss=[b1,b2,b3,b4,b5].filter(Boolean).length;
+  const isBuy=bs>=ss,score=isBuy?bs:ss,conds=isBuy?[c1,c2,c3,c4,c5]:[b1,b2,b3,b4,b5];
   document.querySelectorAll('.sdot').forEach((d,i)=>{d.className='sdot '+(conds[i]?'on':'off');});
   const badge=document.getElementById('signalBadge'),sigText=document.getElementById('sigText'),slTp=document.getElementById('slTpBadge');
-  let newSig='WAIT';
   if(score>=4&&isBuy){
-    const sl=ATR?+(price-ATR).toFixed(4):+(price*0.997).toFixed(4);
-    const tp=ATR?+(price+ATR*2).toFixed(4):+(price*1.006).toFixed(4);
-    badge.textContent='▲ BUY';badge.className='sig-buy';sigText.textContent=score+'/6 confirmed · long';
-    slTp.innerHTML=`<span style="color:var(--red)">SL ${sl.toFixed(price>100?0:4)}</span><br><span style="color:var(--green)">TP ${tp.toFixed(price>100?0:4)}</span>`;
-    newSig='BUY';
+    badge.textContent='▲ BUY';badge.className='sig-buy';sigText.textContent=score+'/5 confirmed · long';
+    const sl=(price*0.997).toFixed(2),tp=(price+(price-price*0.997)*2).toFixed(2);
+    slTp.innerHTML=`<span style="color:var(--red)">SL ${sl}</span><br><span style="color:var(--green)">TP ${tp}</span>`;
+    xLogSig('BUY',price,score);
   }else if(score>=4&&!isBuy){
-    const sl=ATR?+(price+ATR).toFixed(4):+(price*1.003).toFixed(4);
-    const tp=ATR?+(price-ATR*2).toFixed(4):+(price*0.994).toFixed(4);
-    badge.textContent='▼ SELL';badge.className='sig-sell';sigText.textContent=score+'/6 confirmed · short';
-    slTp.innerHTML=`<span style="color:var(--red)">SL ${sl.toFixed(price>100?0:4)}</span><br><span style="color:var(--green)">TP ${tp.toFixed(price>100?0:4)}</span>`;
-    newSig='SELL';
-  }else{badge.textContent='◈ WAIT';badge.className='sig-wait';sigText.textContent=score+'/6 · need 4+';slTp.innerHTML='';}
-  // Signal log
-  if(newSig!=='WAIT'&&newSig!==_lastSig){
-    if(_lastSig&&_lastSig!=='WAIT'&&_lastSigPrice){
-      const oc=_lastSig==='BUY'?(price>_lastSigPrice?'WIN':'LOSS'):(price<_lastSigPrice?'WIN':'LOSS');
-      updateSigOutcome(oc,price);
-    }
-    logSig(newSig,price,score);
-  }
-  _lastSig=newSig;if(newSig!=='WAIT')_lastSigPrice=price;
-  // Store for AI
-  window._ind={symbol,interval,price,E9,E21,RSI,VW,QQE,ATR,vRatio,score,isBuy,sig:newSig};
+    badge.textContent='▼ SELL';badge.className='sig-sell';sigText.textContent=score+'/5 confirmed · short';
+    const sl=(price*1.003).toFixed(2),tp=(price-(price*1.003-price)*2).toFixed(2);
+    slTp.innerHTML=`<span style="color:var(--red)">SL ${sl}</span><br><span style="color:var(--green)">TP ${tp}</span>`;
+    xLogSig('SELL',price,score);
+  }else{badge.textContent='◈ WAIT';badge.className='sig-wait';sigText.textContent=score+'/5 · need 4+';slTp.innerHTML='';xLogSig('WAIT',price,score);}
   const last=candles[n];
   document.getElementById('iO').textContent=last.o.toFixed(2);document.getElementById('iH').textContent=last.h.toFixed(2);
   document.getElementById('iL').textContent=last.l.toFixed(2);document.getElementById('iC').textContent=last.c.toFixed(2);
   document.getElementById('iV').textContent=fv(last.v);document.getElementById('iEMA9').textContent=E9?E9.toFixed(1):'—';
   document.getElementById('iEMA21').textContent=E21?E21.toFixed(1):'—';document.getElementById('iVWAP').textContent=VW?VW.toFixed(1):'—';
   document.getElementById('rsiVal').textContent=RSI?RSI.toFixed(1):'—';document.getElementById('qqeVal').textContent=QQE?QQE.toFixed(1):'—';
+  window._ind={symbol,interval,price,E9,E21,RSI,VW,QQE,score,isBuy};
   return{e9,e21,vwap,bb,rsiA,qqeA};
 }
 function fv(v){return v>=1e6?(v/1e6).toFixed(1)+'M':v>=1e3?(v/1e3).toFixed(1)+'K':v.toFixed(0);}
@@ -598,7 +490,6 @@ function closeDrawer(){
   document.getElementById('drawerBackdrop').classList.remove('show');
 }
 
-// Swipe down to close
 let _ty=0;
 document.getElementById('drawer').addEventListener('touchstart',e=>{_ty=e.touches[0].clientY;},{passive:true});
 document.getElementById('drawer').addEventListener('touchend',e=>{if(e.changedTouches[0].clientY-_ty>80)closeDrawer();},{passive:true});
@@ -616,9 +507,8 @@ function executeTrade(side){
   const amt=parseFloat(document.getElementById('tradeAmt').value)||100;
   if(amt<=0){toast('⚠ Invalid amount');return;}if(amt>acct.bal){toast('⚠ Insufficient balance');return;}
   const slIn=parseFloat(document.getElementById('tradeSL').value),tpIn=parseFloat(document.getElementById('tradeTP').value);
-  const ATR=window._atr||0;
-  const sl=slIn||(side==='LONG'?(ATR?+(price-ATR).toFixed(4):+(price*0.997).toFixed(4)):(ATR?+(price+ATR).toFixed(4):+(price*1.003).toFixed(4)));
-  const tp=tpIn||(side==='LONG'?(ATR?+(price+ATR*2).toFixed(4):+(price*1.006).toFixed(4)):(ATR?+(price-ATR*2).toFixed(4):+(price*0.994).toFixed(4)));
+  const sl=side==='LONG'?(slIn||+(price*0.997).toFixed(4)):(slIn||+(price*1.003).toFixed(4));
+  const tp=side==='LONG'?(tpIn||+(price*1.006).toFixed(4)):(tpIn||+(price*0.994).toFixed(4));
   acct.bal-=amt;
   acct.pos.push({id:Date.now(),pair:symbol,side,entry:price,qty:amt/price,amt,sl,tp,time:new Date().toLocaleTimeString()});
   saveAcct();updateFab();renderDrawer();
@@ -652,8 +542,6 @@ function renderDrawer(){
   document.getElementById('acctBal').textContent='$'+acct.bal.toFixed(0);
   document.getElementById('acctEq').textContent='$'+equity.toFixed(0);
   const pEl=document.getElementById('acctPnl');pEl.textContent=(tPnl>=0?'+':'')+' $'+Math.abs(tPnl).toFixed(0);pEl.style.color=tPnl>=0?'var(--green)':'var(--red)';
-
-  // Positions
   const pl=document.getElementById('posList');
   if(!acct.pos.length){pl.innerHTML='<div class="empty"><div class="empty-icon">📭</div>No open positions</div>';}
   else pl.innerHTML=acct.pos.map(p=>{
@@ -666,18 +554,14 @@ function renderDrawer(){
     <div class="pos-foot"><span class="pos-pnl" style="color:${c}">${pnl>=0?'+':''}$${pnl.toFixed(2)} (${pnl>=0?'+':''}${pct}%)</span>
     <button class="close-btn" onclick="closePos(${p.id})">CLOSE</button></div></div>`;
   }).join('');
-
-  // History
   const hl=document.getElementById('histList');
   if(!acct.hist.length){hl.innerHTML='<div class="empty"><div class="empty-icon">📜</div>No closed trades</div>';}
   else hl.innerHTML='<div class="hist-card">'+acct.hist.slice(0,50).map(h=>{
     const c=h.pnl>=0?'var(--green)':'var(--red)';
-    return`<div class="hist-row"><div class="hist-left"><div class="hist-pair">${h.pair}<span style="font-size:9px;color:${h.side==='LONG'?'var(--green)':'var(--red)'}">${h.side}</span></div>
+    return`<div class="hist-row"><div><div class="hist-pair">${h.pair}<span style="font-size:9px;color:${h.side==='LONG'?'var(--green)':'var(--red)'}">${h.side}</span></div>
     <div class="hist-meta">${h.entry.toFixed(2)} → ${h.exit.toFixed(2)} · ${h.time}</div></div>
     <span class="hist-pnl" style="color:${c}">${h.pnl>=0?'+':''}$${h.pnl.toFixed(2)}</span></div>`;
   }).join('')+'</div>';
-
-  // Stats
   const wins=acct.hist.filter(h=>h.pnl>0),losses=acct.hist.filter(h=>h.pnl<=0);
   document.getElementById('sWR').textContent=acct.hist.length?(wins.length/acct.hist.length*100).toFixed(0)+'%':'—';
   document.getElementById('sTot').textContent=acct.hist.length;
@@ -685,97 +569,84 @@ function renderDrawer(){
   document.getElementById('sWorst').textContent=losses.length?'-$'+(Math.abs(Math.min(...losses.map(h=>h.pnl)))).toFixed(2):'—';
   document.getElementById('sAvgW').textContent=wins.length?'+$'+(wins.reduce((s,h)=>s+h.pnl,0)/wins.length).toFixed(2):'—';
   document.getElementById('sAvgL').textContent=losses.length?'-$'+(Math.abs(losses.reduce((s,h)=>s+h.pnl,0)/losses.length)).toFixed(2):'—';
-  // Signal stats
-  const sl=loadSigLog(),slWins=sl.filter(s=>s.outcome==='WIN'),slDone=sl.filter(s=>s.outcome);
-  document.getElementById('sSigWR').textContent=slDone.length?(slWins.length/slDone.length*100).toFixed(0)+'%':'—';
+  const sl=xGetSigLog(),slW=sl.filter(s=>s.oc==='WIN'),slD=sl.filter(s=>s.oc);
+  document.getElementById('sSigWR').textContent=slD.length?(slW.length/slD.length*100).toFixed(0)+'%':'—';
   document.getElementById('sSigTot').textContent=sl.length;
-  // Signal log tab
-  renderSigLog();
+  xRenderSigLog();
 }
 
 function updateFab(){const n=acct.pos.length,b=document.getElementById('fabBadge');b.style.display=n?'flex':'none';b.textContent=n;}
 function resetAcct(){if(!confirm('Reset to $10,000?'))return;acct={bal:START,pos:[],hist:[]};saveAcct();updateFab();renderDrawer();toast('Reset ✓');}
-
 let _tt;function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove('show'),2400);}
 
 // ════════════════════════════════
 // SIGNAL LOG
 // ════════════════════════════════
-function loadSigLog(){try{return JSON.parse(localStorage.getItem('sigLog'))||[];}catch(e){return[];}}
-function saveSigLog(l){localStorage.setItem('sigLog',JSON.stringify(l));}
-function logSig(type,price,score){
-  const l=loadSigLog();
-  l.unshift({id:Date.now(),type,pair:symbol,tf:interval,price,score,time:new Date().toLocaleTimeString(),outcome:null});
-  if(l.length>200)l.pop();saveSigLog(l);
+let _prevSig='';
+function xGetSigLog(){try{return JSON.parse(localStorage.getItem('xSigLog'))||[];}catch(e){return[];}}
+function xSaveSigLog(l){localStorage.setItem('xSigLog',JSON.stringify(l));}
+function xLogSig(type,price,score){
+  if(type===_prevSig)return;
+  if(type!=='WAIT'){
+    const l=xGetSigLog();
+    if(_prevSig&&_prevSig!=='WAIT'){
+      const last=l.find(s=>!s.oc);
+      if(last){last.oc=_prevSig==='BUY'?(price>last.price?'WIN':'LOSS'):(price<last.price?'WIN':'LOSS');}
+    }
+    l.unshift({type,pair:symbol,tf:interval,price,score,time:new Date().toLocaleTimeString(),oc:null});
+    if(l.length>100)l.pop();
+    xSaveSigLog(l);
+  }
+  _prevSig=type;
 }
-function updateSigOutcome(outcome,exitPrice){
-  const l=loadSigLog(),last=l.find(s=>s.outcome===null);
-  if(last){last.outcome=outcome;last.exitPrice=exitPrice;saveSigLog(l);}
-}
-function renderSigLog(){
-  const l=loadSigLog(),el=document.getElementById('sigLogList');
-  if(!l.length){el.innerHTML='<div class="empty"><div class="empty-icon">📡</div>No signals yet — BUY/SELL auto-log here</div>';return;}
-  el.innerHTML='<div class="siglog-card">'+l.slice(0,50).map(s=>{
-    const oc=s.outcome?`<span style="font-weight:700;color:${s.outcome==='WIN'?'var(--green)':'var(--red)'}">${s.outcome}</span>`:'<span style="color:var(--muted);font-size:10px">OPEN</span>';
-    return`<div class="siglog-row">
-      <span class="${s.type==='BUY'?'siglog-b':'siglog-s'}">${s.type}</span>
-      <span style="color:var(--muted);font-size:10px">${s.pair} ${s.tf} · ${s.score}/6 · ${s.time}</span>
-      <div style="text-align:right">${oc}<br><span style="font-size:9px;color:var(--muted)">@${s.price.toFixed(s.price>100?0:4)}</span></div>
-    </div>`;
+function xRenderSigLog(){
+  const l=xGetSigLog(),el=document.getElementById('sigList');
+  if(!l.length){el.innerHTML='<div class="empty"><div class="empty-icon">📡</div>No signals yet</div>';return;}
+  el.innerHTML='<div class="slog-card">'+l.slice(0,40).map(s=>{
+    const oc=s.oc?`<b style="color:${s.oc==='WIN'?'var(--green)':'var(--red)'}">${s.oc}</b>`:'<span style="color:var(--muted)">open</span>';
+    return`<div class="slog-row"><span class="slog-${s.type.toLowerCase()}">${s.type}</span><span style="color:var(--muted);font-size:10px">${s.pair} ${s.tf} ${s.score}/5 ${s.time}</span>${oc}</div>`;
   }).join('')+'</div>';
 }
 
 // ════════════════════════════════
 // GROQ AI
 // ════════════════════════════════
-let _groqKey=localStorage.getItem('groqKey')||'';
-let _aiOpen=false;
-
+let _gk=localStorage.getItem('gk')||'';
 function openAI(){
-  _aiOpen=true;
   document.getElementById('aiDrawer').classList.add('open');
   document.getElementById('drawerBackdrop').classList.add('show');
-  if(_groqKey)document.getElementById('aiKeyIn').placeholder='API key saved ✓';
+  if(_gk)document.getElementById('aiKeyIn').placeholder='Key saved ✓';
 }
 function closeAI(){
-  _aiOpen=false;
   document.getElementById('aiDrawer').classList.remove('open');
   document.getElementById('drawerBackdrop').classList.remove('show');
 }
 document.getElementById('aiDrawer').addEventListener('touchstart',e=>{_ty=e.touches[0].clientY;},{passive:true});
 document.getElementById('aiDrawer').addEventListener('touchend',e=>{if(e.changedTouches[0].clientY-_ty>80)closeAI();},{passive:true});
-
 function saveGroqKey(){
   const v=document.getElementById('aiKeyIn').value.trim();
   if(!v){toast('⚠ Enter a key');return;}
-  _groqKey=v;localStorage.setItem('groqKey',v);
+  _gk=v;localStorage.setItem('gk',v);
   document.getElementById('aiKeyIn').value='';
-  document.getElementById('aiKeyIn').placeholder='API key saved ✓';
-  toast('✓ Groq key saved');
+  document.getElementById('aiKeyIn').placeholder='Key saved ✓';
+  toast('✓ Key saved');
 }
-async function runGroqAnalysis(){
-  if(!_groqKey){toast('⚠ Add Groq API key first');return;}
-  const ind=window._ind;
-  if(!ind||!ind.price){toast('⚠ Waiting for market data');return;}
-  const btn=document.getElementById('aiRunBtn');
-  const out=document.getElementById('aiOut');
+async function runAI(){
+  if(!_gk){toast('⚠ Add Groq key first');return;}
+  const ind=window._ind;if(!ind){toast('⚠ No data yet');return;}
+  const btn=document.getElementById('aiRunBtn'),out=document.getElementById('aiOut');
   btn.disabled=true;out.textContent='🔮 Analyzing…';
-  const recent=loadSigLog().slice(0,5).map(s=>`${s.type}@${s.price.toFixed(2)}→${s.outcome||'open'}`).join(', ');
-  const prompt=`Concise crypto trading assistant. Analyze this real-time snapshot in 4 sentences: (1) market bias, (2) signal reliability, (3) key risk, (4) one actionable tip.
-
-${ind.symbol} ${ind.interval} | Price:${ind.price.toFixed(2)} | Signal:${ind.sig}(${ind.score}/6) | EMA9:${ind.E9?.toFixed(1)} EMA21:${ind.E21?.toFixed(1)} | RSI:${ind.RSI?.toFixed(1)} | VWAP:${ind.VW?.toFixed(1)} | QQE:${ind.QQE?.toFixed(1)} | ATR:${ind.ATR?.toFixed(2)} | VolRatio:${ind.vRatio?.toFixed(2)}x | Recent signals: ${recent||'none'}`;
+  const rec=xGetSigLog().slice(0,5).map(s=>`${s.type}@${s.price.toFixed(2)}(${s.oc||'open'})`).join(' ');
+  const prompt=`Crypto trading assistant. 4 sentences: (1) bias, (2) signal reliability, (3) key risk, (4) actionable tip.\n${ind.symbol} ${ind.interval} Price:${ind.price.toFixed(2)} Signal:${ind.isBuy?'BUY':'SELL'}(${ind.score}/5) EMA9:${ind.E9?.toFixed(1)} EMA21:${ind.E21?.toFixed(1)} RSI:${ind.RSI?.toFixed(1)} VWAP:${ind.VW?.toFixed(1)} QQE:${ind.QQE?.toFixed(1)} RecentSigs:${rec||'none'}`;
   try{
     const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{
       method:'POST',
-      headers:{'Content-Type':'application/json','Authorization':'Bearer '+_groqKey},
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+_gk},
       body:JSON.stringify({model:'llama3-8b-8192',messages:[{role:'user',content:prompt}],max_tokens:250,temperature:0.4})
     });
-    if(!res.ok){const e=await res.json();throw new Error(e.error?.message||'API error');}
-    const d=await res.json();
-    out.textContent=d.choices[0].message.content;
-  }catch(err){
-    out.textContent='Error: '+err.message+'\n\nCheck your Groq key at console.groq.com (free)';
-  }
+    if(!res.ok)throw new Error((await res.json()).error?.message||'API error');
+    out.textContent=(await res.json()).choices[0].message.content;
+  }catch(err){out.textContent='Error: '+err.message;}
   btn.disabled=false;
 }
 
