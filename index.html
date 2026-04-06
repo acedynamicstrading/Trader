@@ -100,7 +100,7 @@
 
   /* ── FABs ── */
   #fab-trade {
-    position:fixed; bottom:calc(var(--sab) + 14px); right:14px; z-index:50;
+    position:fixed; bottom:calc(var(--sab) + 14px); left:14px; z-index:50;
     width:52px; height:52px; border-radius:50%; border:none; cursor:pointer;
     background:var(--blue); color:#fff; font-size:20px;
     box-shadow:0 4px 20px rgba(33,150,243,0.5); display:flex; align-items:center; justify-content:center;
@@ -114,7 +114,7 @@
     font-family:'JetBrains Mono',monospace;
   }
   #fab-ai {
-    position:fixed; bottom:calc(var(--sab) + 74px); right:14px; z-index:50;
+    position:fixed; bottom:calc(var(--sab) + 74px); left:14px; z-index:50;
     width:40px; height:40px; border-radius:50%; border:none; cursor:pointer;
     background:linear-gradient(135deg,#6a1be0,#b06aff); color:#fff; font-size:16px;
     box-shadow:0 4px 16px rgba(176,106,255,0.5); display:flex; align-items:center; justify-content:center;
@@ -151,7 +151,7 @@
   .drawer-body::-webkit-scrollbar { display:none; }
 
   /* ── TRADE FORM ── */
-  .acct-row { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:14px; }
+  .acct-row { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:6px; margin-bottom:14px; }
   .acct-card { background:var(--card); border-radius:8px; padding:10px; border:1px solid var(--border); }
   .ac-lbl { font-size:9px; color:var(--muted); letter-spacing:1px; margin-bottom:3px; }
   .ac-val { font-family:'JetBrains Mono',monospace; font-size:14px; font-weight:600; }
@@ -350,6 +350,7 @@
       <div class="acct-card"><div class="ac-lbl">BALANCE</div><div class="ac-val" id="a-bal" style="color:var(--blue)">$10,000</div></div>
       <div class="acct-card"><div class="ac-lbl">EQUITY</div><div class="ac-val" id="a-eq">$10,000</div></div>
       <div class="acct-card"><div class="ac-lbl">P&L</div><div class="ac-val" id="a-pnl">$0</div></div>
+      <div class="acct-card"><div class="ac-lbl">FEES</div><div class="ac-val" id="a-fees" style="color:var(--red)">$0</div></div>
     </div>
 
     <!-- TRADE TAB -->
@@ -381,12 +382,23 @@
           <div class="form-lbl">TAKE PROFIT</div>
           <input class="form-input" id="f-tp" type="number" inputmode="decimal" placeholder="auto">
         </div>
+        <div style="margin-top:10px;padding:8px 10px;background:var(--bg);border-radius:6px;border:1px solid var(--border);font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace">
+          Fee: 0.1% entry + 0.1% exit = <span style="color:var(--yellow)" id="f-fee-est">$0.20</span> on $100
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;padding:10px 14px;background:var(--card);border-radius:8px;border:1px solid var(--border)">
+        <span style="font-size:11px;color:var(--muted);flex:1">AUTO-TRADE on signal (4+/6)</span>
+        <label style="position:relative;display:inline-block;width:40px;height:22px">
+          <input type="checkbox" id="auto-trade-toggle" style="opacity:0;width:0;height:0" onchange="toggleAutoTrade(this.checked)">
+          <span id="auto-trade-track" style="position:absolute;cursor:pointer;inset:0;border-radius:11px;background:var(--border);transition:0.2s"></span>
+          <span id="auto-trade-knob" style="position:absolute;left:2px;bottom:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:0.2s"></span>
+        </label>
       </div>
       <div class="trade-btns">
         <button class="btn-long" onclick="execTrade('LONG')">▲ LONG</button>
         <button class="btn-short" onclick="execTrade('SHORT')">▼ SHORT</button>
       </div>
-      <div style="text-align:center;font-size:10px;color:var(--muted);margin-top:8px">Paper trading · no real money</div>
+      <div style="text-align:center;font-size:10px;color:var(--muted);margin-top:8px">Paper trading · 0.1% fee per side simulated</div>
     </div>
 
     <!-- POSITIONS TAB -->
@@ -934,22 +946,42 @@ function setTF(t, btn) {
 // PAPER TRADING
 // ═══════════════════════════════════════════
 const START = 10000;
+const FEE_RATE = 0.001; // 0.1% per side (Binance taker fee)
 let acct = (() => {
-  try { return JSON.parse(localStorage.getItem('lcp_acct')) || { bal: START, pos: [], hist: [] }; }
-  catch(e) { return { bal: START, pos: [], hist: [] }; }
+  try { return JSON.parse(localStorage.getItem('lcp_acct')) || { bal: START, pos: [], hist: [], totalFees: 0 }; }
+  catch(e) { return { bal: START, pos: [], hist: [], totalFees: 0 }; }
 })();
-let currentPrice = 0, tradeOpen = false;
+if (!acct.totalFees) acct.totalFees = 0;
+let currentPrice = 0, tradeOpen = false, autoTrade = false, _lastAutoSig = '';
 
 function saveAcct() { localStorage.setItem('lcp_acct', JSON.stringify(acct)); }
+
+function toggleAutoTrade(on) {
+  autoTrade = on;
+  const track = document.getElementById('auto-trade-track');
+  const knob  = document.getElementById('auto-trade-knob');
+  track.style.background = on ? 'var(--blue)' : 'var(--border)';
+  knob.style.transform = on ? 'translateX(18px)' : 'translateX(0)';
+  toast(on ? '🤖 Auto-trade ON' : 'Auto-trade OFF');
+}
 
 function openTrade() {
   tradeOpen = true;
   document.getElementById('f-sym').textContent = sym;
   document.getElementById('f-price').textContent = currentPrice ? currentPrice.toFixed(2) : '—';
+  updateFeeEst();
   document.getElementById('trade-drawer').classList.add('open');
   document.getElementById('backdrop').classList.add('show');
   renderDrawer();
 }
+
+function updateFeeEst() {
+  const amt = parseFloat(document.getElementById('f-amt').value) || 100;
+  const fee = (amt * FEE_RATE * 2).toFixed(2);
+  const el = document.getElementById('f-fee-est');
+  if (el) el.textContent = '$' + fee + ' on $' + amt;
+}
+document.getElementById('f-amt').addEventListener('input', updateFeeEst);
 
 function closeAll() {
   tradeOpen = false;
@@ -967,37 +999,58 @@ function switchTab(t, btn) {
   renderDrawer();
 }
 
-function setAmt(v) { document.getElementById('f-amt').value = v; }
+function setAmt(v) { document.getElementById('f-amt').value = v; updateFeeEst(); }
 
 function execTrade(side) {
   if (!currentPrice) { toast('⚠ No price yet'); return; }
   const amt = parseFloat(document.getElementById('f-amt').value) || 100;
   if (amt <= 0) { toast('⚠ Invalid amount'); return; }
-  if (amt > acct.bal) { toast('⚠ Insufficient balance'); return; }
+  const entryFee = +(amt * FEE_RATE).toFixed(4);
+  const totalCost = amt + entryFee;
+  if (totalCost > acct.bal) { toast('⚠ Insufficient balance'); return; }
   const slIn = parseFloat(document.getElementById('f-sl').value);
   const tpIn = parseFloat(document.getElementById('f-tp').value);
   const price = currentPrice;
   const sl = slIn || (side === 'LONG' ? +(price*0.997).toFixed(4) : +(price*1.003).toFixed(4));
   const tp = tpIn || (side === 'LONG' ? +(price*1.006).toFixed(4) : +(price*0.994).toFixed(4));
-  acct.bal -= amt;
-  acct.pos.push({ id: Date.now(), sym, side, entry: price, qty: amt/price, amt, sl, tp, time: new Date().toLocaleTimeString() });
+  acct.bal -= totalCost;
+  acct.totalFees += entryFee;
+  acct.pos.push({ id: Date.now(), sym, side, entry: price, qty: amt/price, amt, sl, tp, entryFee, time: new Date().toLocaleTimeString() });
   saveAcct(); updateBadge(); renderDrawer();
   document.getElementById('f-sl').value = '';
   document.getElementById('f-tp').value = '';
-  toast((side === 'LONG' ? '▲ LONG' : '▼ SHORT') + ' @ ' + price.toFixed(2));
+  toast((side === 'LONG' ? '▲ LONG' : '▼ SHORT') + ' @ ' + price.toFixed(2) + ' · fee $' + entryFee.toFixed(2));
+}
+
+function execAutoTrade(side) {
+  if (!currentPrice || acct.pos.length >= 3) return; // max 3 auto positions
+  const amt = parseFloat(document.getElementById('f-amt').value) || 100;
+  const entryFee = +(amt * FEE_RATE).toFixed(4);
+  if (amt + entryFee > acct.bal) return;
+  const price = currentPrice;
+  const sl = side === 'LONG' ? +(price*0.997).toFixed(4) : +(price*1.003).toFixed(4);
+  const tp = side === 'LONG' ? +(price*1.006).toFixed(4) : +(price*0.994).toFixed(4);
+  acct.bal -= (amt + entryFee);
+  acct.totalFees += entryFee;
+  acct.pos.push({ id: Date.now(), sym, side, entry: price, qty: amt/price, amt, sl, tp, entryFee, auto: true, time: new Date().toLocaleTimeString() });
+  saveAcct(); updateBadge();
+  toast('🤖 AUTO ' + (side === 'LONG' ? '▲ LONG' : '▼ SHORT') + ' @ ' + price.toFixed(2));
 }
 
 function closePos(id, forcePrice) {
   const i = acct.pos.findIndex(p => p.id === id);
   if (i === -1) return;
   const p = acct.pos[i], exit = forcePrice || currentPrice;
-  const pnl = +((p.side === 'LONG' ? exit - p.entry : p.entry - exit) * p.qty).toFixed(4);
-  acct.bal += p.amt + pnl;
+  const grossPnl = (p.side === 'LONG' ? exit - p.entry : p.entry - exit) * p.qty;
+  const exitFee = +(p.amt * FEE_RATE).toFixed(4);
+  const netPnl = +(grossPnl - exitFee).toFixed(4);
+  acct.totalFees += exitFee;
+  acct.bal += p.amt + netPnl;
   acct.pos.splice(i, 1);
-  acct.hist.unshift({ sym: p.sym, side: p.side, entry: p.entry, exit, pnl, time: new Date().toLocaleTimeString() });
+  acct.hist.unshift({ sym: p.sym, side: p.side, entry: p.entry, exit, grossPnl: +grossPnl.toFixed(4), fees: +(p.entryFee + exitFee).toFixed(4), pnl: netPnl, time: new Date().toLocaleTimeString() });
   if (acct.hist.length > 100) acct.hist.pop();
   saveAcct(); updateBadge(); renderDrawer();
-  toast('Closed · ' + (pnl >= 0 ? '+' : '') + '$' + pnl.toFixed(2));
+  toast('Closed · net ' + (netPnl >= 0 ? '+' : '') + '$' + netPnl.toFixed(2));
 }
 
 function checkSLTP() {
@@ -1011,6 +1064,19 @@ function checkSLTP() {
       else if (currentPrice <= p.tp) { closePos(p.id, p.tp); toast('🎯 Take profit!'); }
     }
   });
+  // Auto-trade signal check
+  if (autoTrade && window._ind) {
+    const ind = window._ind;
+    if (!ind.tied && ind.score >= 4) {
+      const sigKey = ind.isBuy ? 'BUY' : 'SELL';
+      if (sigKey !== _lastAutoSig) {
+        _lastAutoSig = sigKey;
+        execAutoTrade(ind.isBuy ? 'LONG' : 'SHORT');
+      }
+    } else {
+      _lastAutoSig = '';
+    }
+  }
 }
 
 function uPnl() {
@@ -1027,6 +1093,7 @@ function renderDrawer() {
   const tPnl = rPnl + up;
   document.getElementById('a-bal').textContent = '$' + acct.bal.toFixed(0);
   document.getElementById('a-eq').textContent = '$' + equity.toFixed(0);
+  document.getElementById('a-fees').textContent = '$' + (acct.totalFees||0).toFixed(2);
   const pEl = document.getElementById('a-pnl');
   pEl.textContent = (tPnl >= 0 ? '+' : '') + '$' + Math.abs(tPnl).toFixed(0);
   pEl.style.color = tPnl >= 0 ? 'var(--green)' : 'var(--red)';
@@ -1037,17 +1104,19 @@ function renderDrawer() {
     pl.innerHTML = '<div class="empty">📭 No open positions</div>';
   } else {
     pl.innerHTML = acct.pos.map(p => {
-      const pnl = currentPrice ? (p.side === 'LONG' ? currentPrice - p.entry : p.entry - currentPrice) * p.qty : 0;
-      const pct = (pnl/p.amt*100).toFixed(2), c = pnl >= 0 ? 'var(--green)' : 'var(--red)';
+      const grossPnl = currentPrice ? (p.side === 'LONG' ? currentPrice - p.entry : p.entry - currentPrice) * p.qty : 0;
+      const exitFee = p.amt * FEE_RATE;
+      const netPnl = grossPnl - exitFee;
+      const pct = (netPnl/p.amt*100).toFixed(2), c = netPnl >= 0 ? 'var(--green)' : 'var(--red)';
       return `<div class="pos-card">
-        <div class="pos-top"><span class="pos-pair">${p.sym}</span><span class="pos-badge ${p.side==='LONG'?'long':'short'}">${p.side}</span></div>
+        <div class="pos-top"><span class="pos-pair">${p.sym}${p.auto?' 🤖':''}</span><span class="pos-badge ${p.side==='LONG'?'long':'short'}">${p.side}</span></div>
         <div class="pos-grid">
           <span>Entry <b>${p.entry.toFixed(2)}</b></span><span>Now <b>${currentPrice?currentPrice.toFixed(2):'—'}</b></span>
           <span>SL <b style="color:var(--red)">${p.sl.toFixed(2)}</b></span><span>TP <b style="color:var(--green)">${p.tp.toFixed(2)}</b></span>
-          <span>Size <b>$${p.amt}</b></span><span>At <b>${p.time}</b></span>
+          <span>Size <b>$${p.amt}</b></span><span>Fee <b style="color:var(--yellow)">$${((p.entryFee||0)+exitFee).toFixed(2)}</b></span>
         </div>
         <div class="pos-foot">
-          <span class="pos-pnl" style="color:${c}">${pnl>=0?'+':''}$${pnl.toFixed(2)} (${pnl>=0?'+':''}${pct}%)</span>
+          <span class="pos-pnl" style="color:${c}">${netPnl>=0?'+':''}$${netPnl.toFixed(2)} (${netPnl>=0?'+':''}${pct}%)</span>
           <button class="close-btn" onclick="closePos(${p.id})">CLOSE</button>
         </div>
       </div>`;
@@ -1064,7 +1133,7 @@ function renderDrawer() {
       return `<div class="hist-row">
         <div>
           <div style="font-weight:600;font-size:12px">${h.sym} <span style="font-size:9px;color:${h.side==='LONG'?'var(--green)':'var(--red)'}">${h.side}</span></div>
-          <div style="font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace">${h.entry.toFixed(2)} → ${h.exit.toFixed(2)} · ${h.time}</div>
+          <div style="font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace">${h.entry.toFixed(2)} → ${h.exit.toFixed(2)} · fee $${(h.fees||0).toFixed(2)} · ${h.time}</div>
         </div>
         <span class="hist-pnl" style="color:${c}">${h.pnl>=0?'+':''}$${h.pnl.toFixed(2)}</span>
       </div>`;
@@ -1088,7 +1157,7 @@ function updateBadge() {
 
 function resetAcct() {
   if (!confirm('Reset to $10,000?')) return;
-  acct = { bal: START, pos: [], hist: [] };
+  acct = { bal: START, pos: [], hist: [], totalFees: 0 };
   saveAcct(); updateBadge(); renderDrawer(); toast('Reset ✓');
 }
 
@@ -1138,12 +1207,12 @@ async function runAI() {
   const bb = ind.BB ? `BB(upper:${ind.BB.u.toFixed(2)},mid:${ind.BB.mid.toFixed(2)},lower:${ind.BB.l.toFixed(2)})` : 'BB:n/a';
   const sigStr = ind.tied ? 'NEUTRAL' : ind.isBuy ? 'BUY' : 'SELL';
 
-  const prompt = `You are a professional crypto trading analyst. Analyze this chart data and give a concise 4-part analysis:
+  const prompt = `You are a professional crypto trading analyst. Analyze this live chart data and give a precise 5-part analysis:
 
 Symbol: ${ind.sym} | Timeframe: ${ind.tf} | Price: ${ind.price.toFixed(4)}
 
 Indicators:
-- Signal: ${sigStr} (${ind.score}/6 conditions met — buy:${ind.buyScore} sell:${ind.sellScore})
+- Signal: ${sigStr} (${ind.score}/6 conditions — buy:${ind.buyScore} sell:${ind.sellScore})
 - EMA9: ${ind.E9?.toFixed(2) ?? 'n/a'} | EMA21: ${ind.E21?.toFixed(2) ?? 'n/a'} | Trend: ${ind.E9 > ind.E21 ? 'BULLISH' : 'BEARISH'}
 - RSI(14): ${ind.RSI?.toFixed(1) ?? 'n/a'}
 - VWAP: ${ind.VW?.toFixed(2) ?? 'n/a'} | Price vs VWAP: ${ind.price > ind.VW ? 'ABOVE' : 'BELOW'}
@@ -1155,16 +1224,17 @@ Respond in exactly this format (keep it short and actionable):
 **BIAS:** [Bullish/Bearish/Neutral and brief reason]
 **CONFIDENCE:** [Low/Medium/High and why based on indicator agreement]
 **KEY RISK:** [The main risk to this trade right now]
-**RECOMMENDATION:** [Specific actionable advice — entry zone, SL, TP if applicable, or wait conditions]`;
+**RECOMMENDATION:** [Specific entry zone, SL, TP — or exact conditions to wait for]
+**WHEN TO BUY:** [Specific price level or indicator condition that confirms entry — e.g. "Enter long if price holds above VWAP ${ind.VW?.toFixed(2)} and RSI crosses back above 50" or "Wait for MACD histogram to turn positive"]`;
 
   try {
     const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + _key },
       body: JSON.stringify({
-        model: 'llama-3.3-70b-versatile',
+        model: 'moonshotai/kimi-k2-instruct',
         messages: [{ role: 'user', content: prompt }],
-        max_tokens: 350,
+        max_tokens: 450,
         temperature: 0.3
       })
     });
